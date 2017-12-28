@@ -3,7 +3,8 @@ import * as ReactDOM from 'react-dom';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 import './index.css';
-import * as firebase from 'firebase';
+import { initializeApp } from 'firebase';
+import { Provider } from 'react-firebase';
 
 const config = {
 	apiKey: 'AIzaSyD1h-noaQWGGGgt5U9dblVihVVFvtwOqTE',
@@ -13,10 +14,12 @@ const config = {
 	storageBucket: 'marriage-test.appspot.com',
 	messagingSenderId: '757149552794',
 };
-firebase.initializeApp(config);
+const fireBaseApp = initializeApp(config);
 
 ReactDOM.render(
-	<App />,
+	<Provider firebaseApp={fireBaseApp}>
+		<App />
+	</Provider>,
 	document.getElementById('root') as HTMLElement
 );
 registerServiceWorker();

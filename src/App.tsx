@@ -1,6 +1,7 @@
 import * as React from 'react';
+
 import './App.css';
-import * as firebase from 'firebase';
+import Date from './Date';
 
 const logo = require('./logo.svg');
 
@@ -16,18 +17,6 @@ class App extends React.Component<Props, State> {
 		this.state = { date: '' };
 	}
 
-	componentDidMount() {
-		const database = firebase.database ? firebase.database() : undefined;
-		if (database) {
-			const rootRef = database.ref().child('date');
-			rootRef.on('value', (snap) => {
-				this.setState({
-					date: snap ? snap.val() : '',
-				});
-			});
-		}
-	}
-
 	render() {
 		return (
 			<div className="App">
@@ -37,7 +26,7 @@ class App extends React.Component<Props, State> {
 				</div>
 				<p className="App-intro">
 					To get started, edit <code>src/App.tsx</code> and save to reload.
-					{this.state.date}
+					<Date />
 				</p>
 			</div>
 		);
