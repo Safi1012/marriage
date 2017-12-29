@@ -6,6 +6,7 @@ const HeaderStyles = css`
 	height: 150px;
 	padding: 20px;
 	color: white;
+	text-align: center;
 
 	.icon {
 		animation: App-logo-spin infinite 20s linear;

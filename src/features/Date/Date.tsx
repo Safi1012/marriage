@@ -8,9 +8,6 @@ interface Props {
 
 class Date extends React.Component<Props, State> {
 
-	constructor(props: Props) {
-		super(props);
-	}
 	render() {
 		return <span>{this.props.date}</span>;
 	}
