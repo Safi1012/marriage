@@ -1,14 +1,14 @@
 import * as React from 'react';
+import styled from 'styled-components';
 
-import './App.css';
-import Date from './Date';
+import Date from '../Date';
+import Header from '../Header';
+import appStyles from './App.styles';
 
-const logo = require('./logo.svg');
-
-interface State {
-	date: string;
+interface State {}
+interface Props {
+	className?: string;
 }
-interface Props {}
 
 class App extends React.Component<Props, State> {
 
@@ -19,11 +19,8 @@ class App extends React.Component<Props, State> {
 
 	render() {
 		return (
-			<div className="App">
-				<div className="App-header">
-					<img src={logo} className="App-logo" alt="logo" />
-					<h2>Welcome to React</h2>
-				</div>
+			<div className={this.props.className}>
+			<Header />
 				<p className="App-intro">
 					To get started, edit <code>src/App.tsx</code> and save to reload.
 					<Date />
@@ -33,4 +30,4 @@ class App extends React.Component<Props, State> {
 	}
 }
 
-export default App;
+export default styled(App)`${appStyles}`;
