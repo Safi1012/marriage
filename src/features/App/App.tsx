@@ -8,6 +8,7 @@ import CountDown from '../CountDown';
 import Header from '../Header';
 import appStyles from './App.styles';
 import urls from '../../shared/urls';
+import { loginWithGoogle } from '../../services/authentication';
 
 interface State {}
 interface Props {
@@ -22,6 +23,12 @@ class App extends React.Component<Props, State> {
 		this.state = { date: '' };
 		this.history = createBrowserHistory();
 	}
+
+	componentDidMount() {
+		loginWithGoogle();
+
+	}
+
 
 	render() {
 		return (
