@@ -5,6 +5,7 @@ import Icon from '../../common/Icon';
 import headerStyles from './Header.styles';
 import { Link } from 'react-router-dom';
 import urls from '../../shared/urls';
+import { onAuthStateChanged } from '../../services/authentication';
 
 interface State {}
 interface Props {
@@ -16,6 +17,13 @@ class Header extends React.Component<Props, State> {
 	constructor(props: Props) {
 		super(props);
 	}
+
+	componentDidMount() {
+		onAuthStateChanged.subscribe(() => {
+			console.log('HEADER');
+		});
+	}
+
 	render() {
 		return (
 			<header>

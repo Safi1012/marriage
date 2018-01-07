@@ -10,8 +10,8 @@ interface Props {}
 class Home extends React.Component<Props, State> {
 
 	componentDidMount() {
-		onAuthStateChanged((user: any) => {
-			console.log(user);
+		onAuthStateChanged.subscribe(() => {
+			console.log('HOME');
 		});
 	}
 

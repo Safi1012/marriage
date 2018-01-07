@@ -1,5 +1,5 @@
 import { firebaseApp, firebase } from '../firebase';
-
+import { Observable } from 'rxjs';
 
 let login = false;
 const isLoggedIn = () => login;
@@ -10,7 +10,20 @@ const loginWithGoogle = () => {
 	return signIn;
 };
 
-const onAuthStateChanged = firebase.auth().onAuthStateChanged;
+const onAuthStateChanged = Observable.create((observer: any) => {
+	const connectToFireBase = () => setTimeout(
+		() => {
+			try {
+				firebase.auth().onAuthStateChanged((user) => {
+					observer.next(user);
+				});
+			} catch (e) {
+				connectToFireBase();
+			}
+		},
+		2);
+	connectToFireBase();
+});
 
 
 export {

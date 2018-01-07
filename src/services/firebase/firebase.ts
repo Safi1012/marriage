@@ -11,9 +11,6 @@ const config = {
 
 const firebaseApp = firebase.initializeApp(config);
 
-firebase.auth().onAuthStateChanged((user) => {
-});
-
 export {
 	firebaseApp,
 	firebase
