@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { User } from 'firebase';
-import { onAuthStateChanged } from '../../services/authentication';
+import { onAuthStateChanged, isLoggedIn, isLoggedInSubject } from '../../services/authentication';
 
 interface State {
 	loggedInUser?: User;
@@ -13,6 +13,10 @@ class Home extends React.Component<Props, State> {
 		onAuthStateChanged.subscribe(() => {
 			console.log('HOME');
 		});
+		isLoggedIn.subscribe(update => console.log(update));
+		isLoggedInSubject.subscribe(console.log);
+		console.log(isLoggedIn);
+		console.log(isLoggedInSubject);
 	}
 
 
