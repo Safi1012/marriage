@@ -1,19 +1,22 @@
 import * as React from 'react';
-import { User } from 'firebase';
-import { onAuthStateChanged, isLoggedIn, loginWithGoogle } from '../../services/authentication';
+import { isLoggedIn, loginWithGoogle } from '../../services/authentication';
 
 interface State {
-	loggedInUser?: User;
+	isLoggedIn: boolean;
 }
 interface Props {}
 
 class Home extends React.Component<Props, State> {
 
+	constructor(props: Props) {
+		super(props);
+		this.state = {
+			isLoggedIn: false,
+		};
+	}
+
 	componentDidMount() {
-		onAuthStateChanged.subscribe((user: any) => {
-			console.log(user);
-		});
-		isLoggedIn.subscribe(update => console.log(update));
+		isLoggedIn.subscribe(isLoggedIn => this.setState({ isLoggedIn }));
 	}
 
 
@@ -21,7 +24,7 @@ class Home extends React.Component<Props, State> {
 		return (
 			<p>
 				Welcome to this page
-				<button onClick={loginWithGoogle}>login</button>
+				<button onClick={loginWithGoogle} hidden={this.state.isLoggedIn}>login</button>
 			</p>
 		);
 	}

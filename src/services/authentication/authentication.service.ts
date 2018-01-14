@@ -20,6 +20,7 @@ const onAuthStateChanged = Observable.create((observer: any) => {
 		2);
 	connectToFireBase();
 });
+onAuthStateChanged.subscribe();
 
 const loginWithGoogle = () => {
 	const googleProvider = new firebase.auth.GoogleAuthProvider();
