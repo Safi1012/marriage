@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { User } from 'firebase';
-import { onAuthStateChanged, isLoggedIn, isLoggedInSubject } from '../../services/authentication';
+import { onAuthStateChanged, isLoggedIn, loginWithGoogle } from '../../services/authentication';
 
 interface State {
 	loggedInUser?: User;
@@ -10,13 +10,10 @@ interface Props {}
 class Home extends React.Component<Props, State> {
 
 	componentDidMount() {
-		onAuthStateChanged.subscribe(() => {
-			console.log('HOME');
+		onAuthStateChanged.subscribe((user: any) => {
+			console.log(user);
 		});
 		isLoggedIn.subscribe(update => console.log(update));
-		isLoggedInSubject.subscribe(console.log);
-		console.log(isLoggedIn);
-		console.log(isLoggedInSubject);
 	}
 
 
@@ -24,6 +21,7 @@ class Home extends React.Component<Props, State> {
 		return (
 			<p>
 				Welcome to this page
+				<button onClick={loginWithGoogle}>login</button>
 			</p>
 		);
 	}
