@@ -1,5 +1,7 @@
 import * as React from 'react';
-import { isLoggedIn, loginWithGoogle } from '../../services/authentication';
+
+import { isLoggedIn, loginWithGoogle, onAuthStateChanged } from '../../services/authentication';
+import Button from '../../common/Button/Button';
 
 interface State {
 	isLoggedIn: boolean;
@@ -17,15 +19,24 @@ class Home extends React.Component<Props, State> {
 
 	componentDidMount() {
 		isLoggedIn.subscribe(isLoggedIn => this.setState({ isLoggedIn }));
+		onAuthStateChanged.subscribe((user: any) => console.log(user));
 	}
 
 
 	render() {
 		return (
-			<p>
-				Welcome to this page
-				<button onClick={loginWithGoogle} hidden={this.state.isLoggedIn}>login</button>
-			</p>
+			<div>
+				<p>
+					Welcome to this page
+					<button onClick={loginWithGoogle} hidden={this.state.isLoggedIn}>login</button>
+				</p>
+
+				<div>
+					<Button brand="default">+</Button>
+					<button>increase</button>
+					<button>increase</button>
+				</div>
+			</div>
 		);
 	}
 }
