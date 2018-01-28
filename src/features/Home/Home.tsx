@@ -1,10 +1,12 @@
 import * as React from 'react';
+import { Button } from 'rebass';
 
-import { isLoggedIn, loginWithGoogle, onAuthStateChanged } from '../../services/authentication';
-import Button from '../../common/Button/Button';
+import { isLoggedIn, loginWithGoogle } from '../../services/authentication';
+import Counter from '../Counter/Counter';
 
 interface State {
 	isLoggedIn: boolean;
+	user?: any;
 }
 interface Props {}
 
@@ -19,23 +21,18 @@ class Home extends React.Component<Props, State> {
 
 	componentDidMount() {
 		isLoggedIn.subscribe(isLoggedIn => this.setState({ isLoggedIn }));
-		onAuthStateChanged.subscribe((user: any) => console.log(user));
 	}
-
 
 	render() {
 		return (
 			<div>
 				<p>
 					Welcome to this page
-					<button onClick={loginWithGoogle} hidden={this.state.isLoggedIn}>login</button>
+					<Button onClick={loginWithGoogle} hidden={this.state.isLoggedIn}>login</Button>
 				</p>
 
-				<div>
-					<Button brand="default">+</Button>
-					<button>increase</button>
-					<button>increase</button>
-				</div>
+				{this.state.isLoggedIn && <Counter />}
+				{<Counter />}
 			</div>
 		);
 	}
