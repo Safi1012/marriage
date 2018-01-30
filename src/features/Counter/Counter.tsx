@@ -3,6 +3,7 @@ import { connect } from 'react-firebase';
 
 import { Button } from 'rebass';
 import { App } from '../../services/firebase';
+import addCurrentUser, { InjetedCurrentUserProps } from '../hocs/currentUser/currentUser';
 
 interface State {}
 
@@ -11,15 +12,9 @@ interface firebaseInjectedProps {
 	score: number;
 	setCounterValue: (value: number) => any;
 }
-interface Props extends externalProps, firebaseInjectedProps {}
+interface Props extends externalProps, firebaseInjectedProps, InjetedCurrentUserProps {}
 
 class Counter extends React.Component<Props, State> {
-
-	constructor(props: Props) {
-		super(props);
-		this.state = {
-		};
-	}
 
 	increaseMyScore = () => {
 		this.props.setCounterValue(this.props.score + 1);
@@ -46,10 +41,12 @@ class Counter extends React.Component<Props, State> {
 }
 
 const mapFirebaseToProps = (props: Props, ref: any, firebase: App) => ({
-	score: `counter/${firebase.auth().currentUser && firebase.auth().currentUser!.uid}/score`,
-	setCounterValue: (value: number) => ref(`counter/${firebase.auth().currentUser && firebase.auth().currentUser!.uid}/score`).set(value),
+	score: `counter/${props.currentUser && props.currentUser.uid}/score`,
+	setCounterValue: (value: number) => ref(`counter/${props.currentUser && props.currentUser.uid}/score`).set(value),
 });
 
-export default connect(
-	mapFirebaseToProps
-)(Counter);
+export default addCurrentUser()(
+	connect(
+		mapFirebaseToProps
+	)(Counter)
+);

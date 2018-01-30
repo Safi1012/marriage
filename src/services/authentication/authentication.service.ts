@@ -1,11 +1,11 @@
-import { firebaseApp, firebase } from '../firebase';
+import { firebaseApp, firebase, User } from '../firebase';
 import { Observable, Subject } from 'rxjs';
 
 const loginSubject = new Subject<boolean>();
 const isLoggedIn = loginSubject.distinctUntilChanged().publishReplay(1);
 isLoggedIn.connect();
 
-const onAuthStateChanged = Observable.create((observer: any) => {
+const onAuthStateChanged: Observable<User> = Observable.create((observer: any) => {
 	const connectToFireBase = () => setTimeout(
 		() => {
 			try {
