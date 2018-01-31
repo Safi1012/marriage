@@ -1,15 +1,15 @@
 import * as React from 'react';
 import { Subscription } from 'rxjs';
 
-import { User } from '../../../services/firebase';
-import { onAuthStateChanged } from '../../../services/authentication';
+import { User } from '../../services/firebase';
+import { onAuthStateChanged } from '../../services/authentication';
 
 
 export interface InjetedCurrentUserProps {
 	currentUser?: User;
 }
 
-export default function currentUser<OriginalProps>() {
+export default function addCurrentUser<OriginalProps>() {
 	interface State {
 		currentUser?: User;
 	}

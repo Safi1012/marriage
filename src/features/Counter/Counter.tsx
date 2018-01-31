@@ -3,7 +3,7 @@ import { connect } from 'react-firebase';
 
 import { Button } from 'rebass';
 import { App } from '../../services/firebase';
-import addCurrentUser, { InjetedCurrentUserProps } from '../hocs/currentUser/currentUser';
+import addCurrentUser, { InjetedCurrentUserProps } from '../../hocs/addCurrentUser';
 
 interface State {}
 
@@ -25,6 +25,9 @@ class Counter extends React.Component<Props, State> {
 	}
 
 	render() {
+		if (!this.props.currentUser) {
+			return null;
+		}
 		return (
 			<div>
 				<div>
