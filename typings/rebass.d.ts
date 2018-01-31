@@ -10,6 +10,8 @@
 
 declare module 'rebass' {
 	import * as React from "react";
+	import {StyledComponentClass} from 'styled-components';
+
 	export interface BaseProps<C> extends React.Props<C> {
 		tagName?: string;
 		className?: string;
@@ -121,7 +123,7 @@ declare module 'rebass' {
 		onClick?: () => any;
 		hidden?: boolean;
 	}
-	type ButtonClass = React.StatelessComponent<ButtonProps>
+	type ButtonClass = StyledComponentClass<ButtonProps, HTMLButtonElement>;// React.StatelessComponent<ButtonProps>
 	export const Button: ButtonClass;
 
 	export interface ButtonCircleProps extends BaseProps<ButtonCircleClass> {

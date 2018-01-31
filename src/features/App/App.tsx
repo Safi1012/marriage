@@ -2,9 +2,11 @@ import * as React from 'react';
 import styled from 'styled-components';
 import { Router, Route } from 'react-router';
 import createBrowserHistory from 'history/createBrowserHistory';
+import { Container } from 'rebass';
 
 import Home from '../Home';
 import CountDown from '../CountDown';
+import Response from '../Response';
 import Header from '../Header';
 import appStyles from './App.styles';
 import urls from '../../shared/urls';
@@ -29,8 +31,11 @@ class App extends React.Component<Props, State> {
 				<div className={this.props.className}>
 					<Header />
 					<main>
-						<Route exact path={urls.home} component={Home} />
-						<Route path={urls.countDown} component={CountDown} />
+						<Container>
+							<Route exact path={urls.home} component={Home} />
+							<Route path={urls.countDown} component={CountDown} />
+							<Route path={urls.response} component={Response} />
+						</Container>
 					</main>
 				</div>
 			</Router>
