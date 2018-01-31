@@ -24,8 +24,11 @@ onAuthStateChanged.subscribe();
 
 const loginWithGoogle = () => {
 	const googleProvider = new firebase.auth.GoogleAuthProvider();
-	const signIn = firebaseApp.auth().signInWithRedirect(googleProvider);
-	return signIn;
+	return firebaseApp.auth().signInWithRedirect(googleProvider);
+};
+
+const logout = () => {
+	return firebaseApp.auth().signOut();
 };
 
 
@@ -33,4 +36,5 @@ export {
 	loginWithGoogle,
 	isLoggedIn,
 	onAuthStateChanged,
+	logout,
 };

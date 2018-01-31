@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Button } from 'rebass';
 
-import { isLoggedIn, loginWithGoogle } from '../../services/authentication';
+import { isLoggedIn, loginWithGoogle, logout } from '../../services/authentication';
 import Counter from '../Counter/Counter';
 
 interface State {
@@ -29,6 +29,7 @@ class Home extends React.Component<Props, State> {
 				<p>
 					Welcome to this page
 					<Button onClick={loginWithGoogle} hidden={this.state.isLoggedIn}>login</Button>
+					<Button onClick={logout} hidden={!this.state.isLoggedIn}>logout</Button>
 				</p>
 
 				{this.state.isLoggedIn && <Counter />}
