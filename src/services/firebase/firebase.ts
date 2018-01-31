@@ -1,5 +1,11 @@
 import * as firebase from 'firebase';
 
+interface User extends firebase.UserInfo{}
+interface Reference extends firebase.database.Reference{}
+interface App extends firebase.app.App{}
+interface Database extends firebase.database.Database{}
+interface Auth extends firebase.auth.Auth{}
+
 const config = {
 	apiKey: 'AIzaSyD1h-noaQWGGGgt5U9dblVihVVFvtwOqTE',
 	authDomain: 'marriage-test.firebaseapp.com',
@@ -11,8 +17,14 @@ const config = {
 
 const firebaseApp = firebase.initializeApp(config);
 
+
 export {
 	firebaseApp,
-	firebase
+	firebase,
+	User,
+	Reference,
+	App,
+	Database,
+	Auth,
 };
 
