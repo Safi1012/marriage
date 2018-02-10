@@ -10,7 +10,22 @@
 
 declare module 'rebass' {
 	import * as React from "react";
-	import {StyledComponentClass} from 'styled-components';
+	import {StyledComponentClass, ThemeProvider, ThemeProviderComponent} from 'styled-components';
+	export { Box, Flex } from 'grid-styled';
+
+	export interface ProviderProps {
+		theme: {
+			breakpoints: number[],
+			space: number[],
+			fontSize: number[],
+			weights: number[],
+			colors: object | any[],
+			font: string,
+			monospace: string,
+			radius: number,
+		};
+	}
+	export const Provider: ThemeProviderComponent<ProviderProps>;
 
 	export interface BaseProps<C> extends React.Props<C> {
 		tagName?: string;

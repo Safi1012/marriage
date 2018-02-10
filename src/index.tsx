@@ -3,6 +3,8 @@ import * as ReactDOM from 'react-dom';
 import App from './features/App';
 import registerServiceWorker from './registerServiceWorker';
 import { Provider } from 'react-firebase';
+import {} from 'styled-components';
+import { Provider as ThemeProvider } from 'rebass';
 
 import { firebaseApp } from './services/firebase';
 
@@ -10,7 +12,9 @@ import 'normalize.css';
 
 ReactDOM.render(
 	<Provider firebaseApp={firebaseApp}>
-		<App />
+		<ThemeProvider>
+			<App />
+		</ThemeProvider>
 	</Provider>,
 	document.getElementById('root') as HTMLElement
 );
