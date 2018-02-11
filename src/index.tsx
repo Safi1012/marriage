@@ -3,7 +3,6 @@ import * as ReactDOM from 'react-dom';
 import App from './features/App';
 import registerServiceWorker from './registerServiceWorker';
 import { Provider } from 'react-firebase';
-import {} from 'styled-components';
 import { Provider as ThemeProvider } from 'rebass';
 
 import { firebaseApp } from './services/firebase';

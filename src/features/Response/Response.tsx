@@ -1,14 +1,29 @@
 import * as React from 'react';
-import { Card, Heading, Button } from 'rebass';
+import { Card, Heading, Button, Box, Flex, Input, ButtonOutline } from 'rebass';
 
-interface State {}
+import Form from '../../common/Form';
+
+interface State {
+	name: string;
+}
 interface Props {}
 
 class Response extends React.Component<Props, State> {
 
 	constructor(props: Props) {
 		super(props);
-		this.state = {};
+		this.state = {
+			name: '',
+		};
+	}
+
+	onSubmit = (e: React.FormEvent<any>) => {
+		console.log('submit');
+		e.preventDefault();
+	}
+
+	updateName = (event: React.ChangeEvent<HTMLInputElement>) => {
+		this.setState({ name: event.target.value });
 	}
 
 	render() {
@@ -16,8 +31,27 @@ class Response extends React.Component<Props, State> {
 			<div>
 				<Heading level={2}>Rückmeldung</Heading>
 				<Card>
-					Hallo
-					<SubmitButton>Abschicken</SubmitButton>
+					<Box p={2}>
+						Wir kommen mit:
+						<Form onSubmit={this.onSubmit}>
+
+							<Box mb={4}>
+								<Box my={2}>
+									<Input placeholder="Name" type="text" value={this.state.name} onChange={this.updateName}/>
+									<Box ml={5} my={2} >
+										<Input placeholder="Unverträglichkeit" type="text" value={this.state.name} onChange={this.updateName}/>
+									</Box>
+								</Box>
+								<FullWithFlex justify="flex-end">
+									<ButtonOutline>Einer Person mehr</ButtonOutline>
+								</FullWithFlex>
+							</Box>
+
+							<FullWithFlex justify="flex-end">
+								<SubmitButton type="submit">Abschicken</SubmitButton>
+							</FullWithFlex>
+						</Form>
+					</Box>
 				</Card>
 			</div>
 		);
@@ -25,10 +59,11 @@ class Response extends React.Component<Props, State> {
 }
 
 
+const FullWithFlex = Flex.extend`
+	width: 100%;
+`;
 const SubmitButton = Button.extend`
-	position: absolute;
-	right: 5px;
-	bottom: 5px;
+	float: right;
 `;
 
 export default Response;
