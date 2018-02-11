@@ -27,11 +27,10 @@ declare module 'rebass' {
 	}
 	export const Provider: ThemeProviderComponent<ProviderProps>;
 
-	export interface BaseProps<C> extends React.Props<C> {
+	export interface BaseProps {
 		tagName?: string;
 		className?: string;
 		baseStyle?: Object;
-		style?: Object;
 		m?: number;
 		mt?: number;
 		mr?: number;
@@ -54,20 +53,20 @@ declare module 'rebass' {
 		pill?: boolean;
 	}
 
-	export interface ArrowProps extends BaseProps<ArrowClass> {
+	export interface ArrowProps extends BaseProps {
 		direction?: "up" | "down";
 	}
 	type ArrowClass = React.StatelessComponent<ArrowProps>
 	export const Arrow: ArrowClass;
 
-	export interface AvatarProps extends BaseProps<AvatarClass> {
+	export interface AvatarProps extends BaseProps {
 		size?: number;
 		src?: string;
 	}
 	type AvatarClass = React.StatelessComponent<AvatarProps>
 	export const Avatar: AvatarClass;
 
-	export interface BadgeProps extends BaseProps<BadgeClass> {
+	export interface BadgeProps extends BaseProps {
 		theme?: "primary" | "secondary" | "default" | "info" | "success" | "warning" | "error";
 		rounded?: boolean | "top" | "right" | "bottom" | "left";
 		pill?: boolean;
@@ -76,14 +75,14 @@ declare module 'rebass' {
 	type BadgeClass = React.StatelessComponent<BadgeProps>
 	export const Badge: BadgeClass;
 
-	export interface BannerProps extends BaseProps<BannerClass> {
+	export interface BannerProps extends BaseProps {
 		align?: "left" | "center" | "right";
 		backgroundImage: string;
 	}
 	type BannerClass = React.StatelessComponent<BannerProps>
 	export const Banner: BannerClass;
 
-	export interface BlockProps extends BaseProps<BlockClass> {
+	export interface BlockProps extends BaseProps {
 		m?: number;
 		mt?: number;
 		mr?: number;
@@ -111,14 +110,14 @@ declare module 'rebass' {
 	type BlockClass = React.StatelessComponent<BlockProps>
 	export const Block: BlockClass;
 
-	export interface BlockquoteProps extends BaseProps<BlockquoteClass> {
+	export interface BlockquoteProps extends BaseProps {
 		source: string;
 		href: string;
 	}
 	type BlockquoteClass = React.StatelessComponent<BlockquoteProps>
 	export const Blockquote: BlockquoteClass;
 
-	export interface BreadcrumbsProps extends BaseProps<BreadcrumbsClass> {
+	export interface BreadcrumbsProps extends BaseProps {
 		links: {
 			children: any;
 			href: string;
@@ -127,7 +126,7 @@ declare module 'rebass' {
 	type BreadcrumbsClass = React.StatelessComponent<BreadcrumbsProps>
 	export const Breadcrumbs: BreadcrumbsClass;
 
-	export interface ButtonProps extends BaseProps<ButtonClass> {
+	export interface ButtonProps extends BaseProps, React.DetailedHTMLProps<React.ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement> {
 		href?: string;
 		color?: string;
 		backgroundColor?: string;
@@ -135,13 +134,11 @@ declare module 'rebass' {
 		pill?: boolean;
 		big?: boolean;
 		theme?: "primary" | "secondary" | "default" | "info" | "success" | "warning" | "error";
-		onClick?: () => any;
-		hidden?: boolean;
 	}
 	type ButtonClass = StyledComponentClass<ButtonProps, HTMLButtonElement>;// React.StatelessComponent<ButtonProps>
 	export const Button: ButtonClass;
 
-	export interface ButtonCircleProps extends BaseProps<ButtonCircleClass> {
+	export interface ButtonCircleProps extends BaseProps {
 		title?: string;
 		href?: string;
 		color?: string;
@@ -151,7 +148,7 @@ declare module 'rebass' {
 	type ButtonCircleClass = React.StatelessComponent<ButtonCircleProps>
 	export const ButtonCircle: ButtonCircleClass;
 
-	export interface ButtonOutlineProps extends BaseProps<ButtonOutlineClass> {
+	export interface ButtonOutlineProps extends BaseProps {
 		href?: string;
 		color?: string;
 		rounded?: boolean | "top" | "right" | "bottom" | "left";
@@ -161,19 +158,19 @@ declare module 'rebass' {
 	type ButtonOutlineClass = React.StatelessComponent<ButtonOutlineProps>
 	export const ButtonOutline: ButtonOutlineClass;
 
-	export interface CardProps extends BaseProps<CardClass> {
+	export interface CardProps extends BaseProps {
 		width?: number | string;
 	}
 	type CardClass = React.StatelessComponent<CardProps>
 	export const Card: CardClass;
 
-	export interface CardImageProps extends BaseProps<CardImageClass> {
+	export interface CardImageProps extends BaseProps {
 		src?: string;
 	}
 	type CardImageClass = React.StatelessComponent<CardImageProps>
 	export const CardImage: CardImageClass;
 
-	export interface CheckboxProps extends BaseProps<CheckboxClass> {
+	export interface CheckboxProps extends BaseProps {
 		label?: string;
 		checked?: boolean;
 		name?: string;
@@ -183,23 +180,23 @@ declare module 'rebass' {
 	type CheckboxClass = React.StatelessComponent<CheckboxProps>
 	export const Checkbox: CheckboxClass;
 
-	export interface CloseProps extends BaseProps<CloseClass> {
+	export interface CloseProps extends BaseProps {
 	}
 	type CloseClass = React.StatelessComponent<CloseProps>
 	export const Close: CloseClass;
 
-	export interface ContainerProps extends BaseProps<ContainerClass> {
+	export interface ContainerProps extends BaseProps {
 	}
 	type ContainerClass = React.StatelessComponent<ContainerProps>
 	export const Container: ContainerClass;
 
-	export interface DividerProps extends BaseProps<DividerClass> {
+	export interface DividerProps extends BaseProps {
 		width?: number;
 	}
 	type DividerClass = React.StatelessComponent<DividerProps>
 	export const Divider: DividerClass;
 
-	export interface DonutProps extends BaseProps<DonutClass> {
+	export interface DonutProps extends BaseProps {
 		value?: number;
 		size?: number;
 		strokeWidth?: number;
@@ -208,7 +205,7 @@ declare module 'rebass' {
 	type DonutClass = React.StatelessComponent<DonutProps>
 	export const Donut: DonutClass;
 
-	export interface DotIndicatorProps extends BaseProps<DotIndicatorClass> {
+	export interface DotIndicatorProps extends BaseProps {
 		length?: number;
 		active?: number;
 		onClick?: Function;
@@ -216,7 +213,7 @@ declare module 'rebass' {
 	type DotIndicatorClass = React.StatelessComponent<DotIndicatorProps>
 	export const DotIndicator: DotIndicatorClass;
 
-	export interface DrawerProps extends BaseProps<DrawerClass> {
+	export interface DrawerProps extends BaseProps {
 		size?: number;
 		open?: boolean;
 		position?: "top" | "right" | "bottom" | "left";
@@ -225,12 +222,12 @@ declare module 'rebass' {
 	type DrawerClass = React.StatelessComponent<DrawerProps>
 	export const Drawer: DrawerClass;
 
-	export interface DropdownProps extends BaseProps<DropdownClass> {
+	export interface DropdownProps extends BaseProps {
 	}
 	type DropdownClass = React.StatelessComponent<DropdownProps>
 	export const Dropdown: DropdownClass;
 
-	export interface DropdownMenuProps extends BaseProps<DropdownMenuClass> {
+	export interface DropdownMenuProps extends BaseProps {
 		open?: boolean;
 		right?: boolean;
 		top?: boolean;
@@ -239,13 +236,13 @@ declare module 'rebass' {
 	type DropdownMenuClass = React.StatelessComponent<DropdownMenuProps>
 	export const DropdownMenu: DropdownMenuClass;
 
-	export interface EmbedProps extends BaseProps<EmbedClass> {
+	export interface EmbedProps extends BaseProps {
 		ratio?: number;
 	}
 	type EmbedClass = React.StatelessComponent<EmbedProps>
 	export const Embed: EmbedClass;
 
-	export interface FixedProps extends BaseProps<FixedClass> {
+	export interface FixedProps extends BaseProps {
 		top?: boolean;
 		right?: boolean;
 		bottom?: boolean;
@@ -255,12 +252,12 @@ declare module 'rebass' {
 	type FixedClass = React.StatelessComponent<FixedProps>
 	export const Fixed: FixedClass;
 
-	export interface FooterProps extends BaseProps<FooterClass> {
+	export interface FooterProps extends BaseProps {
 	}
 	type FooterClass = React.StatelessComponent<FooterProps>
 	export const Footer: FooterClass;
 
-	export interface HeadingProps extends BaseProps<HeadingClass> {
+	export interface HeadingProps extends BaseProps {
 		big?: boolean;
 		level?: number;
 		size?: number;
@@ -269,7 +266,7 @@ declare module 'rebass' {
 	type HeadingClass = React.StatelessComponent<HeadingProps>
 	export const Heading: HeadingClass;
 
-	export interface HeadingLinkProps extends BaseProps<HeadingLinkClass> {
+	export interface HeadingLinkProps extends BaseProps {
 		level?: number;
 		size?: number;
 		href?: string;
@@ -277,7 +274,7 @@ declare module 'rebass' {
 	type HeadingLinkClass = React.StatelessComponent<HeadingLinkProps>
 	export const HeadingLink: HeadingLinkClass;
 
-	export interface InlineFormProps extends BaseProps<InlineFormClass> {
+	export interface InlineFormProps extends BaseProps {
 		label?: string;
 		name?: string;
 		value?: number | string;
@@ -289,7 +286,7 @@ declare module 'rebass' {
 	type InlineFormClass = React.StatelessComponent<InlineFormProps>
 	export const InlineForm: InlineFormClass;
 
-	export interface InputProps extends BaseProps<InputClass> {
+	export interface InputProps extends BaseProps,React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement> {
 		label?: string;
 		name?: string;
 		type?: string;
@@ -301,20 +298,20 @@ declare module 'rebass' {
 	type InputClass = React.StatelessComponent<InputProps>
 	export const Input: InputClass;
 
-	export interface LabelProps extends BaseProps<LabelClass> {
+	export interface LabelProps extends BaseProps {
 		hide?: boolean;
 	}
 	type LabelClass = React.StatelessComponent<LabelProps>
 	export const Label: LabelClass;
 
-	export interface LinkBlockProps extends BaseProps<LinkBlockClass> {
+	export interface LinkBlockProps extends BaseProps {
 		is?: string | Object | Function;
 		href?: string;
 	}
 	type LinkBlockClass = React.StatelessComponent<LinkBlockProps>
 	export const LinkBlock: LinkBlockClass;
 
-	export interface MediaProps extends BaseProps<MediaClass> {
+	export interface MediaProps extends BaseProps {
 		img?: string;
 		right?: boolean;
 		align?: "top" | "center" | "bottom";
@@ -322,25 +319,25 @@ declare module 'rebass' {
 	type MediaClass = React.StatelessComponent<MediaProps>
 	export const Media: MediaClass;
 
-	export interface MenuProps extends BaseProps<MenuClass> {
+	export interface MenuProps extends BaseProps {
 	}
 	type MenuClass = React.StatelessComponent<MenuProps>
 	export const Menu: MenuClass;
 
-	export interface MessageProps extends BaseProps<MessageClass> {
+	export interface MessageProps extends BaseProps {
 		theme?: "primary" | "secondary" | "default" | "info" | "success" | "warning" | "error";
 	}
 	type MessageClass = React.StatelessComponent<MessageProps>
 	export const Message: MessageClass;
 
-	export interface NavItemProps extends BaseProps<NavItemClass> {
+	export interface NavItemProps extends BaseProps {
 		small?: boolean;
 		is?: string | Object | Function;
 	}
 	type NavItemClass = React.StatelessComponent<NavItemProps>
 	export const NavItem: NavItemClass;
 
-	export interface OverlayProps extends BaseProps<OverlayClass> {
+	export interface OverlayProps extends BaseProps {
 		open?: boolean;
 		dark?: boolean;
 		box?: boolean;
@@ -350,44 +347,44 @@ declare module 'rebass' {
 	type OverlayClass = React.StatelessComponent<OverlayProps>
 	export const Overlay: OverlayClass;
 
-	export interface PageHeaderProps extends BaseProps<PageHeaderClass> {
+	export interface PageHeaderProps extends BaseProps {
 		heading?: string;
 		description?: string;
 	}
 	type PageHeaderClass = React.StatelessComponent<PageHeaderProps>
 	export const PageHeader: PageHeaderClass;
 
-	export interface PanelProps extends BaseProps<PanelClass> {
+	export interface PanelProps extends BaseProps {
 		theme?: "primary" | "secondary" | "default" | "info" | "success" | "warning" | "error";
 	}
 	type PanelClass = React.StatelessComponent<PanelProps>
 	export const Panel: PanelClass;
 
-	export interface PanelFooterProps extends BaseProps<PanelFooterClass> {
+	export interface PanelFooterProps extends BaseProps {
 		theme?: "primary" | "secondary" | "default" | "info" | "success" | "warning" | "error";
 	}
 	type PanelFooterClass = React.StatelessComponent<PanelFooterProps>
 	export const PanelFooter: PanelFooterClass;
 
-	export interface PanelHeaderProps extends BaseProps<PanelHeaderClass> {
+	export interface PanelHeaderProps extends BaseProps {
 		theme?: "primary" | "secondary" | "default" | "info" | "success" | "warning" | "error";
 	}
 	type PanelHeaderClass = React.StatelessComponent<PanelHeaderProps>
 	export const PanelHeader: PanelHeaderClass;
 
-	export interface PreProps extends BaseProps<PreClass> {
+	export interface PreProps extends BaseProps {
 	}
 	type PreClass = React.StatelessComponent<PreProps>
 	export const Pre: PreClass;
 
-	export interface ProgressProps extends BaseProps<ProgressClass> {
+	export interface ProgressProps extends BaseProps {
 		value?: number;
 		color?: string;
 	}
 	type ProgressClass = React.StatelessComponent<ProgressProps>
 	export const Progress: ProgressClass;
 
-	export interface RadioProps extends BaseProps<RadioClass> {
+	export interface RadioProps extends BaseProps {
 		checked?: boolean;
 		group?: string;
 		label?: string;
@@ -397,19 +394,19 @@ declare module 'rebass' {
 	type RadioClass = React.StatelessComponent<RadioProps>
 	export const Radio: RadioClass;
 
-	export interface RatingProps extends BaseProps<RatingClass> {
+	export interface RatingProps extends BaseProps {
 		value?: number;
 		onClick?: Function;
 	}
 	type RatingClass = React.StatelessComponent<RatingProps>
 	export const Rating: RatingClass;
 
-	export interface SectionProps extends BaseProps<SectionClass> {
+	export interface SectionProps extends BaseProps {
 	}
 	type SectionClass = React.StatelessComponent<SectionProps>
 	export const Section: SectionClass;
 
-	export interface SectionHeaderProps extends BaseProps<SectionHeaderClass> {
+	export interface SectionHeaderProps extends BaseProps {
 		heading?: string;
 		href?: string;
 		description?: string;
@@ -417,7 +414,7 @@ declare module 'rebass' {
 	type SectionHeaderClass = React.StatelessComponent<SectionHeaderProps>
 	export const SectionHeader: SectionHeaderClass;
 
-	export interface SelectProps extends BaseProps<SelectClass> {
+	export interface SelectProps extends BaseProps {
 		label?: string;
 		name?: string;
 		options?: {
@@ -430,7 +427,7 @@ declare module 'rebass' {
 	type SelectClass = React.StatelessComponent<SelectProps>
 	export const Select: SelectClass;
 
-	export interface SequenceMapProps extends BaseProps<SequenceMapClass> {
+	export interface SequenceMapProps extends BaseProps {
 		steps?: {
 			children: any;
 			href: string;
@@ -440,7 +437,7 @@ declare module 'rebass' {
 	type SequenceMapClass = React.StatelessComponent<SequenceMapProps>
 	export const SequenceMap: SequenceMapClass;
 
-	export interface SequenceMapStepProps extends BaseProps<SequenceMapStepClass> {
+	export interface SequenceMapStepProps extends BaseProps {
 		width?: string;
 		first?: boolean;
 		active?: boolean;
@@ -448,7 +445,7 @@ declare module 'rebass' {
 	type SequenceMapStepClass = React.StatelessComponent<SequenceMapStepProps>
 	export const SequenceMapStep: SequenceMapStepClass;
 
-	export interface SliderProps extends BaseProps<SliderClass> {
+	export interface SliderProps extends BaseProps {
 		label?: string;
 		name?: string;
 		fill?: boolean;
@@ -460,14 +457,14 @@ declare module 'rebass' {
 	type SliderClass = React.StatelessComponent<SliderProps>
 	export const Slider: SliderClass;
 
-	export interface SpaceProps extends BaseProps<SpaceClass> {
+	export interface SpaceProps extends BaseProps {
 		x?: number;
 		auto?: boolean;
 	}
 	type SpaceClass = React.StatelessComponent<SpaceProps>
 	export const Space: SpaceClass;
 
-	export interface StatProps extends BaseProps<StatClass> {
+	export interface StatProps extends BaseProps {
 		value?: number | string;
 		unit?: string;
 		label?: string;
@@ -476,27 +473,27 @@ declare module 'rebass' {
 	type StatClass = React.StatelessComponent<StatProps>
 	export const Stat: StatClass;
 
-	export interface SwitchProps extends BaseProps<SwitchClass> {
+	export interface SwitchProps extends BaseProps {
 		checked?: boolean;
 	}
 	type SwitchClass = React.StatelessComponent<SwitchProps>
 	export const Switch: SwitchClass;
 
-	export interface TableProps extends BaseProps<TableClass> {
+	export interface TableProps extends BaseProps {
 		headings?: any[];
 		data?: any[][];
 	}
 	type TableClass = React.StatelessComponent<TableProps>
 	export const Table: TableClass;
 
-	export interface TextProps extends BaseProps<TextClass> {
+	export interface TextProps extends BaseProps {
 		small?: boolean;
 		bold?: boolean;
 	}
 	type TextClass = React.StatelessComponent<TextProps>
 	export const Text: TextClass;
 
-	export interface TextareaProps extends BaseProps<TextareaClass> {
+	export interface TextareaProps extends BaseProps {
 		label?: string;
 		name?: string;
 		message?: string;
@@ -505,12 +502,12 @@ declare module 'rebass' {
 	type TextareaClass = React.StatelessComponent<TextareaProps>
 	export const Textarea: TextareaClass;
 
-	export interface ToolbarProps extends BaseProps<ToolbarClass> {
+	export interface ToolbarProps extends BaseProps {
 	}
 	type ToolbarClass = React.StatelessComponent<ToolbarProps>
 	export const Toolbar: ToolbarClass;
 
-	export interface TooltipProps extends BaseProps<TooltipClass> {
+	export interface TooltipProps extends BaseProps {
 		title?: string;
 	}
 	type TooltipClass = React.StatelessComponent<TooltipProps>
