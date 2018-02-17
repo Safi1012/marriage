@@ -1,30 +1,62 @@
 import * as React from 'react';
-import { Card, Heading, Button, Box, Flex, Input, ButtonOutline } from 'rebass';
+import { Card, Heading, Button, Box, Flex, ButtonOutline } from 'rebass';
+import { connect } from 'react-firebase';
 
 import Form from '../../common/Form';
+import { App } from '../../services/firebase';
+import addCurrentUser, { InjetedCurrentUserProps } from '../../hocs/addCurrentUser';
+import PersonResponse from './PersonResponse';
 
 interface State {
-	name: string;
+	persons: Person[];
 }
-interface Props {}
+interface ExternalProps {}
+interface FirebaseInjectedProps {
+	persons: Person[];
+	addPerson: (person: Person) => any;
+}
+interface Props extends ExternalProps, InjetedCurrentUserProps, FirebaseInjectedProps {}
+
+// meet, vegetarier, vegan switch
+export interface Person {
+	name: string;
+	allergies: string;
+}
 
 class Response extends React.Component<Props, State> {
 
 	constructor(props: Props) {
 		super(props);
 		this.state = {
-			name: '',
+			persons: [ {
+				name: '',
+				allergies: 'none',
+			} ],
 		};
 	}
+
+	// THis is how the data should look
+	state2 = {
+		persons: [ {
+			name: 'Arne',
+			allergies: 'keine',
+		} ],
+	};
+	// n = person.push()
+	// n.key
 
 	onSubmit = (e: React.FormEvent<any>) => {
 		console.log('submit');
 		e.preventDefault();
+		console.log(this.state);
 	}
 
-	updateName = (event: React.ChangeEvent<HTMLInputElement>) => {
-		this.setState({ name: event.target.value });
+	onPersonUpdate = (person: Person, index: number) => {
+		const newPersons = this.state.persons.splice(0);
+		newPersons[index] = person;
+		this.setState({ persons: newPersons });
 	}
+
 
 	render() {
 		return (
@@ -36,12 +68,8 @@ class Response extends React.Component<Props, State> {
 						<Form onSubmit={this.onSubmit}>
 
 							<Box mb={4}>
-								<Box my={2}>
-									<Input placeholder="Name" type="text" value={this.state.name} onChange={this.updateName}/>
-									<Box ml={5} my={2} >
-										<Input placeholder="Unverträglichkeit" type="text" value={this.state.name} onChange={this.updateName}/>
-									</Box>
-								</Box>
+								<PersonResponse person={this.state.persons[0]} onUpdate={(person: Person) => this.onPersonUpdate(person, 0)} />
+
 								<FullWithFlex justify="flex-end">
 									<ButtonOutline>Einer Person mehr</ButtonOutline>
 								</FullWithFlex>
@@ -66,5 +94,12 @@ const SubmitButton = Button.extend`
 	float: right;
 `;
 
-export default Response;
-
+const mapFirebaseToProps = (props: Props, ref: any, firebase: App) => ({
+	persons: `response/${props.currentUser && props.currentUser.uid}/persons`,
+	addPerson: (person: Person) => ref(`response/${props.currentUser && props.currentUser.uid}/persons`).push(person),
+});
+export default addCurrentUser()(
+	connect(
+		mapFirebaseToProps
+	)(Response)
+);
