@@ -7,8 +7,6 @@ import { Provider as ThemeProvider } from 'rebass';
 
 import { firebaseApp } from './services/firebase';
 
-import 'normalize.css';
-
 ReactDOM.render(
 	<Provider firebaseApp={firebaseApp}>
 		<ThemeProvider>
