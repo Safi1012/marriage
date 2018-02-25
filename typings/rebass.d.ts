@@ -148,7 +148,7 @@ declare module 'rebass' {
 	type ButtonCircleClass = React.StatelessComponent<ButtonCircleProps>
 	export const ButtonCircle: ButtonCircleClass;
 
-	export interface ButtonOutlineProps extends BaseProps {
+	export interface ButtonOutlineProps extends BaseProps, React.DetailedHTMLProps<React.ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement> {
 		href?: string;
 		color?: string;
 		rounded?: boolean | "top" | "right" | "bottom" | "left";

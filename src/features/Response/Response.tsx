@@ -9,14 +9,18 @@ import PersonResponse from './PersonResponse';
 
 interface State {
 	persons: Person[];
+	responded: boolean;
 }
 interface ExternalProps {}
 interface FirebaseInjectedProps {
 	persons: Person[];
+	responded: boolean;
 	addPerson: (person: Person) => any;
+	updateResponded: (responded: boolean) => any;
 }
 interface Props extends ExternalProps, InjetedCurrentUserProps, FirebaseInjectedProps {}
 
+// meet, vegetarier, vegan switch
 export interface Person {
 	name: string;
 	allergies: string;
@@ -31,23 +35,16 @@ class Response extends React.Component<Props, State> {
 				name: '',
 				allergies: 'none',
 			} ],
+			responded: false,
 		};
 	}
 
-	// THis is how the data should look
-	state2 = {
-		persons: [ {
-			name: 'Arne',
-			allergies: 'keine',
-		} ],
-	};
 	// n = person.push()
 	// n.key
 
 	onSubmit = (e: React.FormEvent<any>) => {
-		console.log('submit');
 		e.preventDefault();
-		console.log(this.state);
+		this.props.updateResponded(!this.props.responded);
 	}
 
 	onPersonUpdate = (person: Person, index: number) => {
@@ -56,6 +53,15 @@ class Response extends React.Component<Props, State> {
 		this.setState({ persons: newPersons });
 	}
 
+	addPerson = () => {
+		const newPersons = this.state.persons.splice(0);
+		newPersons.push({ name: '', allergies: '' });
+		this.setState({ persons: newPersons });
+	}
+
+	personResponse = (person: Person, index: number) => {
+		return <PersonResponse key={index} person={this.state.persons[index]} onUpdate={(person: Person) => this.onPersonUpdate(person, index)} />
+	}
 
 	render() {
 		return (
@@ -67,15 +73,15 @@ class Response extends React.Component<Props, State> {
 						<Form onSubmit={this.onSubmit}>
 
 							<Box mb={4}>
-								<PersonResponse person={this.state.persons[0]} onUpdate={(person: Person) => this.onPersonUpdate(person, 0)} />
+								{this.state.persons.map(this.personResponse)}
 
 								<FullWithFlex justify="flex-end">
-									<ButtonOutline>Einer Person mehr</ButtonOutline>
+									<ButtonOutline onClick={this.addPerson} type="button">Einer Person mehr</ButtonOutline>
 								</FullWithFlex>
 							</Box>
 
 							<FullWithFlex justify="flex-end">
-								<SubmitButton type="submit">Abschicken</SubmitButton>
+								<SubmitButton type="submit">{this.props.responded ? 'Abgeschickt' : 'Abschicken'}</SubmitButton>
 							</FullWithFlex>
 						</Form>
 					</Box>
@@ -95,7 +101,9 @@ const SubmitButton = Button.extend`
 
 const mapFirebaseToProps = (props: Props, ref: any, firebase: App) => ({
 	persons: `response/${props.currentUser && props.currentUser.uid}/persons`,
+	responded: `response/${props.currentUser && props.currentUser.uid}/responded`,
 	addPerson: (person: Person) => ref(`response/${props.currentUser && props.currentUser.uid}/persons`).push(person),
+	updateResponded: (responded: boolean) => ref(`response/${props.currentUser && props.currentUser.uid}/responded`).set(responded),
 });
 export default addCurrentUser()(
 	connect(
