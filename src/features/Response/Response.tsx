@@ -8,15 +8,16 @@ import addCurrentUser, { InjetedCurrentUserProps } from '../../hocs/addCurrentUs
 import PersonResponse from './PersonResponse';
 
 interface State {
-	persons: Person[];
-	responded: boolean;
+	persons: PersonWithKey[];
 }
+
 interface ExternalProps {}
 interface FirebaseInjectedProps {
-	persons: Person[];
+	persons: {[key: string]: Person};
 	responded: boolean;
 	addPerson: (person: Person) => any;
 	updateResponded: (responded: boolean) => any;
+	updatePerson: (person: PersonWithKey) => any;
 }
 interface Props extends ExternalProps, InjetedCurrentUserProps, FirebaseInjectedProps {}
 
@@ -25,42 +26,48 @@ export interface Person {
 	name: string;
 	allergies: string;
 }
+export interface PersonWithKey extends Person {
+	key: string;
+}
 
 class Response extends React.Component<Props, State> {
 
 	constructor(props: Props) {
 		super(props);
 		this.state = {
-			persons: [ {
-				name: '',
-				allergies: 'none',
-			} ],
-			responded: false,
+			persons: this.personPropsToPersonState(props.persons),
 		};
 	}
 
-	// n = person.push()
-	// n.key
+	componentWillReceiveProps(nextProps: Props) {
+		if (nextProps.persons !== this.props.persons) {
+			this.setState({ persons: this.personPropsToPersonState(nextProps.persons) });
+		}
+	}
+
+	personPropsToPersonState(persons: {[key: string]: Person}) {
+		if (persons) {
+			return Object.entries(persons)
+				.map(([ key, person ]: [string, Person]) => ({ ...person, key }));
+		}
+		return [];
+	}
 
 	onSubmit = (e: React.FormEvent<any>) => {
 		e.preventDefault();
 		this.props.updateResponded(!this.props.responded);
 	}
 
-	onPersonUpdate = (person: Person, index: number) => {
-		const newPersons = this.state.persons.splice(0);
-		newPersons[index] = person;
-		this.setState({ persons: newPersons });
+	onPersonUpdate = (person: PersonWithKey) => {
+		this.props.updatePerson(person);
 	}
 
 	addPerson = () => {
-		const newPersons = this.state.persons.splice(0);
-		newPersons.push({ name: '', allergies: '' });
-		this.setState({ persons: newPersons });
+		this.props.addPerson({ name: '', allergies: '' });
 	}
 
-	personResponse = (person: Person, index: number) => {
-		return <PersonResponse key={index} person={this.state.persons[index]} onUpdate={(person: Person) => this.onPersonUpdate(person, index)} />
+	personResponse = (person: PersonWithKey) => {
+		return <PersonResponse key={person.key} person={person} onUpdate={this.onPersonUpdate} />;
 	}
 
 	render() {
@@ -104,6 +111,7 @@ const mapFirebaseToProps = (props: Props, ref: any, firebase: App) => ({
 	responded: `response/${props.currentUser && props.currentUser.uid}/responded`,
 	addPerson: (person: Person) => ref(`response/${props.currentUser && props.currentUser.uid}/persons`).push(person),
 	updateResponded: (responded: boolean) => ref(`response/${props.currentUser && props.currentUser.uid}/responded`).set(responded),
+	updatePerson: (person: PersonWithKey) => ref(`response/${props.currentUser && props.currentUser.uid}/persons/${person.key}`).set({ name: person.name, allergies: person.allergies }),
 });
 export default addCurrentUser()(
 	connect(

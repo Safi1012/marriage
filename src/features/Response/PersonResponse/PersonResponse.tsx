@@ -1,11 +1,11 @@
 import * as React from 'react';
 import { Box, Input } from 'rebass';
-import { Person } from '../Response';
+import { PersonWithKey } from '../Response';
 
 interface State {}
 interface Props {
-	person: Person;
-	onUpdate: (person: Person) => void;
+	person: PersonWithKey;
+	onUpdate: (person: PersonWithKey) => void;
 }
 
 class ResponsePerson extends React.Component<Props, State> {
