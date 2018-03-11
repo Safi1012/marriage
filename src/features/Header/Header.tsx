@@ -1,9 +1,9 @@
 import * as React from 'react';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 import Icon from '../../common/Icon';
 import headerStyles from './Header.styles';
-import { Link } from 'react-router-dom';
 import urls from '../../shared/urls';
 
 interface State {}

@@ -1,6 +1,9 @@
+import styled from 'styled-components';
 import * as React from 'react';
-import { Box, Input } from 'rebass';
+import { Box } from 'rebass';
+
 import { PersonWithKey } from '../Response';
+import Input from '../../../common/Input/Input';
 
 interface State {}
 interface Props {
@@ -26,14 +29,25 @@ class ResponsePerson extends React.Component<Props, State> {
 
 	render() {
 		return (
-			<Box my={2}>
-				<Input placeholder="Name" type="text" value={this.props.person.name} onChange={this.updateName}/>
-				<Box ml={5} my={2} >
-					<Input placeholder="Unverträglichkeit" type="text" value={this.props.person.allergies} onChange={this.updateAllergie}/>
+			<Box my={4}>
+				<Box width="300px">
+					<BigInput placeholder="Name" type="text" value={this.props.person.name} onChange={this.updateName}/>
+				</Box>
+				<Box>
+					Ich esse ... und habe die folgenden
+					<Label id=""> Unverträglichkeiten:
+						<Input placeholder="Laktose" type="text" value={this.props.person.allergies} onChange={this.updateAllergie}/>
+					</Label>
 				</Box>
 			</Box>
 		);
 	}
 }
+
+const BigInput = Input.extend`
+	font-size: 1.5em;
+`;
+
+const Label = styled.label``;
 
 export default ResponsePerson;

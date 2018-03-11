@@ -1,8 +1,8 @@
 import { css } from 'styled-components';
-import theme from '../../theme';
+import theme from '../../common/theme';
 
 const HeaderStyles = css`
-	background-color: ${theme.primaryColor};
+	background-color: ${theme.colors.primaryColor};
 	height: 150px;
 	padding: 20px;
 	color: white;
