@@ -18,6 +18,7 @@ interface FirebaseInjectedProps {
 	addPerson: (person: Person) => any;
 	updateResponded: (responded: boolean) => any;
 	updatePerson: (person: PersonWithKey) => any;
+	deleteResponse: (person: PersonWithKey) => any;
 }
 interface Props extends ExternalProps, InjetedCurrentUserProps, FirebaseInjectedProps {}
 
@@ -62,12 +63,16 @@ class Response extends React.Component<Props, State> {
 		this.props.updatePerson(person);
 	}
 
+	deleteResponse = (person: PersonWithKey) => {
+		this.props.deleteResponse(person);
+	}
+
 	addPerson = () => {
 		this.props.addPerson({ name: '', allergies: '' });
 	}
 
 	personResponse = (person: PersonWithKey) => {
-		return <PersonResponse key={person.key} person={person} onUpdate={this.onPersonUpdate} />;
+		return <PersonResponse key={person.key} person={person} onUpdate={this.onPersonUpdate} delete={this.deleteResponse} />;
 	}
 
 	render() {
@@ -112,6 +117,7 @@ const mapFirebaseToProps = (props: Props, ref: any, firebase: App) => ({
 	addPerson: (person: Person) => ref(`response/${props.currentUser && props.currentUser.uid}/persons`).push(person),
 	updateResponded: (responded: boolean) => ref(`response/${props.currentUser && props.currentUser.uid}/responded`).set(responded),
 	updatePerson: (person: PersonWithKey) => ref(`response/${props.currentUser && props.currentUser.uid}/persons/${person.key}`).set({ name: person.name, allergies: person.allergies }),
+	deleteResponse: (person: PersonWithKey) => ref(`response/${props.currentUser && props.currentUser.uid}/persons/${person.key}`).remove(),
 });
 export default addCurrentUser()(
 	connect(

@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import * as React from 'react';
-import { Box } from 'rebass';
+import { Box, Button, Flex } from 'rebass';
 
 import { PersonWithKey } from '../Response';
 import Input from '../../../common/Input/Input';
@@ -9,6 +9,7 @@ interface State {}
 interface Props {
 	person: PersonWithKey;
 	onUpdate: (person: PersonWithKey) => void;
+	delete: (person: PersonWithKey) => void;
 }
 
 class ResponsePerson extends React.Component<Props, State> {
@@ -27,16 +28,25 @@ class ResponsePerson extends React.Component<Props, State> {
 		});
 	}
 
+	delete = () => {
+		this.props.delete(this.props.person);
+	}
+
 	render() {
 		return (
 			<Box my={4}>
-				<Box width="300px">
-					<BigInput placeholder="Name" type="text" value={this.props.person.name} onChange={this.updateName}/>
-				</Box>
+				<Flex justify="space-between" wrap>
+					<Box width="300px">
+						<BigInput placeholder="Name" type="text" value={this.props.person.name} onChange={this.updateName}/>
+					</Box>
+					<RemoveButton onClick={this.delete}>
+						X
+					</RemoveButton>
+				</Flex>
 				<Box>
 					Ich esse ... und habe die folgenden
-					<Label id=""> Unverträglichkeiten:
-						<Input placeholder="Laktose" type="text" value={this.props.person.allergies} onChange={this.updateAllergie}/>
+					<Label id="">
+						 Unverträglichkeiten: <InputMax placeholder="Laktose" type="text" value={this.props.person.allergies} onChange={this.updateAllergie}/>
 					</Label>
 				</Box>
 			</Box>
@@ -44,8 +54,16 @@ class ResponsePerson extends React.Component<Props, State> {
 	}
 }
 
+const RemoveButton = Button.extend`
+	background-color: orange;
+`;
+
 const BigInput = Input.extend`
 	font-size: 1.5em;
+`;
+
+const InputMax = Input.extend`
+	max-width: 500px;
 `;
 
 const Label = styled.label``;
