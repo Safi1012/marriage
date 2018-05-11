@@ -43,12 +43,13 @@ class ResponsePerson extends React.Component<Props, State> {
 						X
 					</RemoveButton>
 				</Flex>
-				<Box>
-					Ich esse ... und habe die folgenden
-					<Label id="">
-						 Unverträglichkeiten: <InputMax placeholder="Laktose" type="text" value={this.props.person.allergies} onChange={this.updateAllergie}/>
-					</Label>
-				</Box>
+				<FlexBox>
+					<Box pr="3px">
+						Ich esse ... und habe die folgenden
+					</Box>
+					<Label htmlFor={`allergie-${this.props.person.key}`}> Unverträglichkeiten: </Label>
+					<InputAllergie placeholder="Laktose" type="text" value={this.props.person.allergies} onChange={this.updateAllergie}/>
+				</FlexBox>
 			</Box>
 		);
 	}
@@ -58,12 +59,18 @@ const RemoveButton = Button.extend`
 	background-color: orange;
 `;
 
-const BigInput = Input.extend`
-	font-size: 1.5em;
+const InputAllergie = Input.extend`
+	flex: 1 0 250px;
+	margin-left: 3px;
 `;
 
-const InputMax = Input.extend`
-	max-width: 500px;
+const FlexBox = Box.extend`
+	display: flex;
+	flex-wrap: wrap;
+`;
+
+const BigInput = Input.extend`
+	font-size: 1.5em;
 `;
 
 const Label = styled.label``;
