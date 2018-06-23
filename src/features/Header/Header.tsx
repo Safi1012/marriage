@@ -23,6 +23,7 @@ class Header extends React.Component<Props, State> {
 					<Link to={urls.home}>Home</Link>
 					<Link to={urls.countDown}>CountDown</Link>
 					<Link to={urls.response}>Rückmeldung</Link>
+					<Link to={urls.wishList}>Wunschliste</Link>
 				</div>
 			</header>
 		);
