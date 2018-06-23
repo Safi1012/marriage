@@ -36,18 +36,25 @@ class WishList extends React.Component<Props, State> {
 		return (
 			<Card key={product.title} m={4} p={3}>
 					<Flex justify="flex-start" wrap>
-						<Box width={[ 1, 1, 0.3 ]}>
+						<Box width={[ 1, 1, 0.3 ]} mb={[ 3, 3, 0 ]}>
 							<Flex align="center">
 								<Image src={product.pictureUrl} />
 							</Flex>
 						</Box>
 						<Box width={[ 1, 1, 0.7 ]}>
-							<Heading level={3}>{product.title}</Heading>
-							<p>{product.description}</p>
-							<Flex justify="space-between">
-								<a href={product.link}>Quelle</a>
-								{product.reservedBy ? null : <Button>Reservieren</Button>}
-							</Flex>
+							<FullHeightFlex column justify="space-between">
+								<Box>
+									<a href={product.link}>
+										<Heading level={3}>{product.title}</Heading>
+									</a>
+									<p>{product.description}</p>
+								</Box>
+								<Box>
+									<Flex justify="flex-end">
+										{product.reservedBy ? <Button disabled>Reserviert</Button> : <Button>Reservieren</Button>}
+									</Flex>
+								</Box>
+							</FullHeightFlex>
 						</Box>
 					</Flex>
 			</Card>
@@ -63,6 +70,10 @@ class WishList extends React.Component<Props, State> {
 		);
 	}
 }
+
+const FullHeightFlex = Flex.extend`
+	height: 100%;
+`;
 
 const Image = styled.img`
 	width: 100%;
