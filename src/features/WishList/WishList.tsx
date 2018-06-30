@@ -1,12 +1,22 @@
 import * as React from 'react';
 import { Heading, Flex, Card, Button, Box } from 'rebass';
 import styled from 'styled-components';
+import { connect } from 'react-firebase';
+
+import { App } from '../../services/firebase';
+import addCurrentUser, { InjetedCurrentUserProps } from '../../hocs/addCurrentUser';
+import theme from '../../common/theme';
+
 
 interface State {
 }
 
 interface ExternalProps {}
-interface Props extends ExternalProps {}// , InjetedCurrentUserProps, FirebaseInjectedProps {}
+interface FirebaseInjectedProps {
+	wishProducts: {[key: string]: WishProduct};
+	reserveProduct: (wishProduct: WishProduct, key: string) => any;
+}
+interface Props extends ExternalProps, FirebaseInjectedProps, InjetedCurrentUserProps {}
 
 export interface WishProduct {
 	title: string;
@@ -15,26 +25,49 @@ export interface WishProduct {
 	pictureUrl?: string;
 	reservedBy?: string;
 }
+export interface WishProductWithKey extends WishProduct {
+	key: string;
+}
 
 class WishList extends React.Component<Props, State> {
 
+	objectToArray(object: {[key: string]: WishProduct}): WishProductWithKey[] {
+		if (object) {
+			return Object.entries(object)
+				.map(([ key, innerObject ]) => ({ ...innerObject, key }));
+		}
+		return [];
+	}
 
-	wishListMock: WishProduct[] = [ {
-		title: 'Waschmaschine',
-		description: 'Bosch WAN28020 Serie 4 A+++/Waschmaschine/1400UpM/VarioPerfect/137 kWh/Jahr/6 kg/weiß [Energieklasse A+++]',
-		link: 'https://www.amazon.de/Bosch-WAN28020-Waschmaschine-1400UpM-VarioPerfect/dp/B00LVUQWS2/ref=sr_1_1_sspa?s=appliances&ie=UTF8&qid=1529750846&sr=1-1-spons&keywords=Waschmaschine&psc=1',
-		pictureUrl: 'https://images-na.ssl-images-amazon.com/images/I/51Myw6Xv5YL._SL1200_.jpg',
-	}, {
-		title: 'Handy',
-		description: 'Outdoor Handy- CUBOT Kingkong 5,0 Zoll Smartphone ohne Vertrag Android 7.0 3G WCDMA Dual Sim Smartphone, ( 2GB RAM +16GB ROM, 8MP+13MP Dual Kamera,4400mAh Akku,IP 68+ Wasserdichtes Staubdichtes Stoßfestes, GPS)',
-		link: 'https://www.amazon.de/CUBOT-Smartphone-Wasserdichtes-Staubdichtes-Sto%C3%9Ffestes/dp/B0793CZXK3/ref=sr_1_1_sspa?s=ce-de&ie=UTF8&qid=1529750936&sr=1-1-spons&keywords=Handy&psc=1',
-		pictureUrl: 'https://images-na.ssl-images-amazon.com/images/I/712KDje4grL._SL1000_.jpg',
-		reservedBy: 'someDude',
-	} ];
+	reserveProduct = (wishProduct: WishProductWithKey) => {
+		const { key, reservedBy, ...newWishProduct } = wishProduct;
+		this.props.reserveProduct({ ...newWishProduct, reservedBy: this.props.currentUser && this.props.currentUser.uid }, key);
+	}
 
-	renderProduct = (product: WishProduct) => {
+	unreserveProduct = (wishProduct: WishProductWithKey) => {
+		const { key, reservedBy, ...newWishProduct } = wishProduct;
+		this.props.reserveProduct(newWishProduct, key);
+	}
+
+	renderReserveButton = (product: WishProductWithKey) => {
+		if (this.props.currentUser) {
+			if (product.reservedBy && product.reservedBy === this.props.currentUser.uid) {
+				return <Button onClick={this.unreserveProduct.bind(this, product)}>Reserviert rückgängig machen</Button>;
+			}
+			if (product.reservedBy && product.reservedBy !== this.props.currentUser.uid) {
+				return <Button disabled>Reserviert</Button>;
+			}
+		}
+		if (!product.reservedBy) {
+			return <Button onClick={this.reserveProduct.bind(this, product)}>Reservieren</Button>;
+		}
+		return <Button disabled>Reserviert</Button>;
+
+	}
+
+	renderProduct = (product: WishProductWithKey) => {
 		return (
-			<Card key={product.title} m={4} p={3}>
+			<Card key={product.key} m={4} p={3}>
 					<Flex justify="flex-start" wrap>
 						<Box width={[ 1, 1, 0.3 ]} mb={[ 3, 3, 0 ]}>
 							<Flex align="center">
@@ -51,11 +84,17 @@ class WishList extends React.Component<Props, State> {
 								</Box>
 								<Box>
 									<Flex justify="flex-end">
-										{product.reservedBy ? <Button disabled>Reserviert</Button> : <Button>Reservieren</Button>}
+										{this.renderReserveButton(product)}
 									</Flex>
 								</Box>
 							</FullHeightFlex>
 						</Box>
+						{
+						this.props.currentUser && this.props.currentUser.uid === product.reservedBy &&
+							<Banner width={[ 1 ]} mt={3} p={3}>
+								Dein Produkt
+							</Banner>
+						}
 					</Flex>
 			</Card>
 		);
@@ -65,11 +104,17 @@ class WishList extends React.Component<Props, State> {
 		return (
 			<div>
 				<Heading level={2}>Wunschliste</Heading>
-				{this.wishListMock.map(this.renderProduct)}
+				{this.objectToArray(this.props.wishProducts).map(this.renderProduct)}
 			</div>
 		);
 	}
 }
+
+const Banner = Box.extend`
+	background-color: ${theme.colors.primaryColor};
+	color: #FFF;
+	text-align: center;
+`;
 
 const FullHeightFlex = Flex.extend`
 	height: 100%;
@@ -79,5 +124,13 @@ const Image = styled.img`
 	width: 100%;
 `;
 
+const mapFirebaseToProps = (props: Props, ref: any, firebase: App) => ({
+	wishProducts: `wishlist`,
+	reserveProduct: (wishProduct: WishProduct, key: string) => ref(`wishlist/${key}`).set(wishProduct),
+});
 
-export default WishList;
+export default addCurrentUser()(
+	connect(
+		mapFirebaseToProps
+	)(WishList)
+);
