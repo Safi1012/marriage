@@ -7,6 +7,7 @@ import { Container } from 'rebass';
 import Home from '../Home';
 import CountDown from '../CountDown';
 import Response from '../Response';
+import WishList from '../WishList';
 import Header from '../Header';
 import appStyles from './App.styles';
 import urls from '../../shared/urls';
@@ -35,6 +36,7 @@ class App extends React.Component<Props, State> {
 							<Route exact path={urls.home} component={Home} />
 							<Route path={urls.countDown} component={CountDown} />
 							<Route path={urls.response} component={Response} />
+							<Route path={urls.wishList} component={WishList} />
 						</Container>
 					</main>
 				</div>

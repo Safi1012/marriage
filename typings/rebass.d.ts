@@ -263,7 +263,7 @@ declare module 'rebass' {
 		size?: number;
 		alt?: boolean;
 	}
-	type HeadingClass = React.StatelessComponent<HeadingProps>
+	type HeadingClass = StyledComponentClass<HeadingProps, HTMLHeadingElement>; // React.StatelessComponent<HeadingProps>
 	export const Heading: HeadingClass;
 
 	export interface HeadingLinkProps extends BaseProps {
