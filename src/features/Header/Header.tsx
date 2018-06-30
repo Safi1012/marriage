@@ -1,10 +1,11 @@
 import * as React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import { Heading } from 'rebass';
+import { Heading, Container, ButtonOutline } from 'rebass';
 
 import headerStyles from './Header.styles';
-import urls from '../../shared/urls';
+import urls, { Route } from '../../shared/urls';
+import theme from '../../common/theme';
 
 interface State {}
 interface Props {
@@ -13,19 +14,27 @@ interface Props {
 
 class Header extends React.Component<Props, State> {
 
+	renderLink = (route: Route) => {
+		return (
+			<ButtonOutline>
+				<Link to={route.url}>{route.displayName}</Link>
+			</ButtonOutline>
+		);
+	}
+
 	render() {
 		return (
-			<header>
+			<StyledHeader>
 				<div className={this.props.className}>
 					<HeaderHeadline level={1}>Hochzeit Lisa & Arne</HeaderHeadline>
 				</div>
-				<div>
-					<Link to={urls.home}>Home</Link>
-					<Link to={urls.countDown}>CountDown</Link>
-					<Link to={urls.response}>Rückmeldung</Link>
-					<Link to={urls.wishList}>Wunschliste</Link>
-				</div>
-			</header>
+				<Container p={3}>
+					{this.renderLink(urls.home)}
+					{this.renderLink(urls.countDown)}
+					{this.renderLink(urls.response)}
+					{this.renderLink(urls.wishList)}
+				</Container>
+			</StyledHeader>
 		);
 
 	}
@@ -35,6 +44,10 @@ const HeaderHeadline = Heading.extend`
 	font-family: 'Great Vibes', cursive;
 	font-size: 3em;
 	line-height: 2;
+`;
+
+const StyledHeader = styled.header`
+	border-bottom: 3px solid ${theme.colors.primaryColor};
 `;
 
 export { Header };
