@@ -33,10 +33,10 @@ class App extends React.Component<Props, State> {
 					<Header />
 					<main>
 						<Container>
-							<Route exact path={urls.home} component={Home} />
-							<Route path={urls.countDown} component={CountDown} />
-							<Route path={urls.response} component={Response} />
-							<Route path={urls.wishList} component={WishList} />
+							<Route exact path={urls.home.url} component={Home} />
+							<Route path={urls.countDown.url} component={CountDown} />
+							<Route path={urls.response.url} component={Response} />
+							<Route path={urls.wishList.url} component={WishList} />
 						</Container>
 					</main>
 				</div>
