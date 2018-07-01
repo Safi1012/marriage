@@ -14,16 +14,18 @@ interface Props {
 
 class Header extends React.Component<Props, State> {
 
+	openLink = (url: string) => window.open(url, '_self');
+
 	renderLink = (route: Route) => {
 		if (route.url === window.location.pathname) {
 			return (
-				<ActiveLinkButton>
+				<ActiveLinkButton onClick={this.openLink.bind(this, route.url)}>
 					<InvertedLink tabIndex={-1} to={route.url}>{route.displayName}</InvertedLink>
 				</ActiveLinkButton>
 			);
 		}
 		return (
-			<LinkButton>
+			<LinkButton onClick={this.openLink.bind(this, route.url)}>
 				<InvertedLink tabIndex={-1} to={route.url}>{route.displayName}</InvertedLink>
 			</LinkButton>
 		);
