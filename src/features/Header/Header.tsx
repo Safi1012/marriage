@@ -1,7 +1,7 @@
 import * as React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import { Heading, Container, ButtonOutline } from 'rebass';
+import { Heading, Container, Button } from 'rebass';
 
 import headerStyles from './Header.styles';
 import urls, { Route } from '../../shared/urls';
@@ -15,10 +15,17 @@ interface Props {
 class Header extends React.Component<Props, State> {
 
 	renderLink = (route: Route) => {
+		if (route.url === window.location.pathname) {
+			return (
+				<ActiveLinkButton>
+					<InvertedLink tabIndex={-1} to={route.url}>{route.displayName}</InvertedLink>
+				</ActiveLinkButton>
+			);
+		}
 		return (
-			<ButtonOutline>
-				<Link to={route.url}>{route.displayName}</Link>
-			</ButtonOutline>
+			<LinkButton>
+				<InvertedLink tabIndex={-1} to={route.url}>{route.displayName}</InvertedLink>
+			</LinkButton>
 		);
 	}
 
@@ -28,7 +35,7 @@ class Header extends React.Component<Props, State> {
 				<div className={this.props.className}>
 					<HeaderHeadline level={1}>Hochzeit Lisa & Arne</HeaderHeadline>
 				</div>
-				<Container p={3}>
+				<Container>
 					{this.renderLink(urls.home)}
 					{this.renderLink(urls.countDown)}
 					{this.renderLink(urls.response)}
@@ -40,6 +47,32 @@ class Header extends React.Component<Props, State> {
 	}
 }
 
+const InvertedLink = styled(Link)`
+	color: #FFF;
+`;
+
+const LinkButton = Button.extend`
+	background-color: ${theme.colors.lightRed};
+	border-radius: 0;
+	color: #FFFF;
+	margin: 2px;
+
+	:active {
+		background-color: ${theme.colors.lightRed};
+	}
+	:focus {
+		box-shadow: 0 0 0 2px #FFF;
+	}
+`;
+
+const ActiveLinkButton = LinkButton.extend`
+	background-color: ${theme.colors.primaryColor};
+	margin: 0;
+	border: none;
+	box-shadow: 0 0 0 2px ${theme.colors.primaryColor};
+
+`;
+
 const HeaderHeadline = Heading.extend`
 	font-family: 'Great Vibes', cursive;
 	font-size: 3em;
@@ -47,7 +80,8 @@ const HeaderHeadline = Heading.extend`
 `;
 
 const StyledHeader = styled.header`
-	border-bottom: 3px solid ${theme.colors.primaryColor};
+	background-color: ${theme.colors.lightRed};
+	margin-bottom: 15px;
 `;
 
 export { Header };
