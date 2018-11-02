@@ -1,7 +1,8 @@
 import * as React from 'react';
-import { Card, Heading, Button, Box, Flex, ButtonOutline } from 'rebass';
+import { Card, Heading, Box, Flex, ButtonOutline, Container } from 'rebass';
 import { connect } from 'react-firebase';
 
+import Button from '../../common/Button';
 import Form from '../../common/Form';
 import { App } from '../../services/firebase';
 import addCurrentUser, { InjetedCurrentUserProps } from '../../hocs/addCurrentUser';
@@ -77,7 +78,7 @@ class Response extends React.Component<Props, State> {
 
 	render() {
 		return (
-			<div>
+			<Container>
 				<Heading level={2}>Rückmeldung</Heading>
 				<Card>
 					<Box p={2}>
@@ -98,7 +99,7 @@ class Response extends React.Component<Props, State> {
 						</Form>
 					</Box>
 				</Card>
-			</div>
+			</Container>
 		);
 	}
 }

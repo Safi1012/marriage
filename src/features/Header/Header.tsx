@@ -1,91 +1,101 @@
 import * as React from 'react';
-import styled from 'styled-components';
+import styled, { StyledComponentClass, css } from 'styled-components';
 import { Link } from 'react-router-dom';
-import { Heading, Container, Button } from 'rebass';
+import { Container, Flex, ButtonProps } from 'rebass';
 
 import headerStyles from './Header.styles';
 import urls, { Route } from '../../shared/urls';
-import theme from '../../common/theme';
+import reset from '../../common/reset';
+import Button from '../../common/Button';
 
-interface State {}
+
 interface Props {
 	className?: string;
 }
 
-class Header extends React.Component<Props, State> {
+class Header extends React.Component<Props> {
 
 	openLink = (url: string) => window.open(url, '_self');
 
 	renderLink = (route: Route) => {
 		if (route.url === window.location.pathname) {
 			return (
-				<ActiveLinkButton onClick={this.openLink.bind(this, route.url)}>
-					<InvertedLink tabIndex={-1} to={route.url}>{route.displayName}</InvertedLink>
-				</ActiveLinkButton>
+				<LinkButton onClick={this.openLink.bind(this, route.url)} tabIndex={-1} active={true}>
+					<InvertedLink to={route.url}>{route.displayName.toUpperCase()}</InvertedLink>
+				</LinkButton>
 			);
 		}
 		return (
-			<LinkButton onClick={this.openLink.bind(this, route.url)}>
-				<InvertedLink tabIndex={-1} to={route.url}>{route.displayName}</InvertedLink>
+			<LinkButton onClick={this.openLink.bind(this, route.url)} tabIndex={-1} active={false}>
+				<InvertedLink to={route.url}>{route.displayName.toUpperCase()}</InvertedLink>
 			</LinkButton>
 		);
 	}
 
 	render() {
 		return (
-			<StyledHeader>
-				<div className={this.props.className}>
-					<HeaderHeadline level={1}>Hochzeit Lisa & Arne</HeaderHeadline>
-				</div>
-				<Container>
-					{this.renderLink(urls.home)}
-					{this.renderLink(urls.countDown)}
-					{this.renderLink(urls.response)}
-					{this.renderLink(urls.wishList)}
-					{this.renderLink(urls.cakeList)}
-				</Container>
-			</StyledHeader>
+			<div className={this.props.className}>
+				<FlexMaxHeight justify-content="center" align="center">
+					<ContainerMaxHeight>
+						{this.renderLink(urls.home)}
+						{this.renderLink(urls.countDown)}
+						{this.renderLink(urls.response)}
+						{this.renderLink(urls.wishList)}
+						{this.renderLink(urls.cakeList)}
+					</ContainerMaxHeight>
+				</FlexMaxHeight>
+			</div>
 		);
 
 	}
 }
 
-const InvertedLink = styled(Link)`
-	color: #FFF;
+const ContainerMaxHeight = styled(Container)`
+	height: 100%;
 `;
 
-const LinkButton = Button.extend`
-	background-color: ${theme.colors.lightRed};
-	border-radius: 0;
-	color: #FFFF;
-	margin: 2px;
+const FlexMaxHeight = styled(Flex)`
+	height: 100%;
+`;
 
-	:active {
-		background-color: ${theme.colors.lightRed};
-	}
+const InvertedLink = styled(Link)`
+	${reset}
+	color: #FFF;
+	text-decoration: none;
 	:focus {
 		box-shadow: 0 0 0 2px #FFF;
 	}
 `;
 
-const ActiveLinkButton = LinkButton.extend`
-	background-color: ${theme.colors.primaryColor};
-	margin: 0;
-	border: none;
-	box-shadow: 0 0 0 2px ${theme.colors.primaryColor};
+const LinkButton = Button.extend`
+	height: 100%;
+	background-color: transparent;
+	border-radius: 0;
+	color: #FFFF;
+	padding: 22px;
+	cursor: pointer;
 
-`;
+	:active {
+		background-color: transparent;
+	}
+	&:after {
+		content: '';
+		width: 0%;
+		height: 1px;
+		display: block;
+		padding-bottom: 4px;
+		margin-bottom: -4px;
+		border-bottom: 1px solid white;
+		transition: width 0.2s ease-in-out;
+	}
+	${(props: any) => props.active && css`
+		border: none;
+		&:after {
+			width: 100%;
+		}
+	`}
+` as StyledComponentClass<ButtonProps & {active: boolean}, any>;
 
-const HeaderHeadline = Heading.extend`
-	font-family: 'Great Vibes', cursive;
-	font-size: 3em;
-	line-height: 2;
-`;
-
-const StyledHeader = styled.header`
-	background-color: ${theme.colors.lightRed};
-	margin-bottom: 15px;
-`;
 
 export { Header };
 export default styled(Header)`${headerStyles}`;

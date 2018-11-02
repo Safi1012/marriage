@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { connect } from 'react-firebase';
 
-import { Button } from 'rebass';
 import { App } from '../../services/firebase';
+import Button from '../../common/Button';
 import addCurrentUser, { InjetedCurrentUserProps } from '../../hocs/addCurrentUser';
 
 interface State {}

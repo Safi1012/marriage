@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { Router, Route } from 'react-router';
 import { Link } from 'react-router-dom';
 import createBrowserHistory from 'history/createBrowserHistory';
-import { Container } from 'rebass';
+import { Container, Box } from 'rebass';
 
 import Home from '../Home';
 import CountDown from '../CountDown';
@@ -35,16 +35,16 @@ class App extends React.Component<Props, State> {
 		return (
 			<Router history={this.history}>
 				<div className={this.props.className}>
-					<Header />
+					<Box mb="20px">
+						<Header />
+					</Box>
 					<Main>
-						<Container>
-							<Route exact path={urls.home.url} component={Home} />
-							<Route path={urls.countDown.url} component={CountDown} />
-							<Route path={urls.response.url} component={Response} />
-							<Route path={urls.wishList.url} component={WishList} />
-							<Route path={urls.cakeList.url} component={CakeList} />
-							<Route path={urls.impressum.url} component={Impressum} />
-						</Container>
+						<Route exact path={urls.home.url} component={Home} />
+						<Route path={urls.countDown.url} component={CountDown} />
+						<Route path={urls.response.url} component={Response} />
+						<Route path={urls.wishList.url} component={WishList} />
+						<Route path={urls.cakeList.url} component={CakeList} />
+						<Route path={urls.impressum.url} component={Impressum} />
 					</Main>
 					<Footer>
 						<Container>

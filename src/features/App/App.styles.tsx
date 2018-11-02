@@ -5,9 +5,9 @@ const AppStyles = css`
 	display: flex;
 	flex-direction: column;
 	position: relative;
+	font-family: 'Open Sans', sans-serif;
 	* {
 		box-sizing: border-box;
-		font-family: 'Open Sans', sans-serif;
 	}
 `;
 

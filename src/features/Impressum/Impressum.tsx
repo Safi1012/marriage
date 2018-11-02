@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { Container } from 'rebass';
 
 
 interface Props {}
@@ -7,7 +8,7 @@ class Impressum extends React.PureComponent<Props> {
 
 	render() {
 		return (
-			<div>
+			<Container>
 				<h1>Impressum</h1>
 				<p>Angaben gemäß § 5 TMG</p>
 				<address>
@@ -20,7 +21,7 @@ class Impressum extends React.PureComponent<Props> {
 				Arne Maier<br/>
 				<h4>Kontakt:</h4>
 				E-Mail: <a href="mailto:arne_maier@gmx.de">arne_maier@gmx.de</a>
-			</div>
+			</Container>
 		);
 	}
 }
