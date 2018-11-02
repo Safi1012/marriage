@@ -55,6 +55,10 @@ class CakeList extends React.Component<Props, State> {
 			bakedBy: this.state.bakedBy,
 			creator: this.props.currentUser && this.props.currentUser.uid,
 		});
+		this.setState({
+			title: '',
+			bakedBy: '',
+		});
 	}
 
 	renderCake = (cake: CakeWithKey) => (
@@ -84,12 +88,12 @@ class CakeList extends React.Component<Props, State> {
 						<tr>
 							<td>
 								<form onSubmit={this.addCake}>
-									<Input id="title" placeholder="Was?" type="text" value={this.state.title} onChange={this.updateTitle} />
+									<Input id="title" required placeholder="Was?" type="text" value={this.state.title} onChange={this.updateTitle} />
 								</form>
 							</td>
 							<td>
 								<form onSubmit={this.addCake}>
-									<Input id="bakedBy" placeholder="Wer?" type="text" value={this.state.bakedBy} onChange={this.updateBakedBy} />
+									<Input id="bakedBy" required placeholder="Wer?" type="text" value={this.state.bakedBy} onChange={this.updateBakedBy} />
 								</form>
 							</td>
 						</tr>
