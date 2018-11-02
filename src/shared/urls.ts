@@ -20,4 +20,8 @@ export default {
 		displayName: 'Geschenkliste',
 		url: '/wishList',
 	},
+	cakeList: {
+		displayeName: 'Kuchenliste',
+		url: '/cakeList',
+	},
 };
