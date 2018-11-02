@@ -3,9 +3,10 @@ import styled from 'styled-components';
 import { Router, Route } from 'react-router';
 import { Link } from 'react-router-dom';
 import createBrowserHistory from 'history/createBrowserHistory';
-import { Container, Box } from 'rebass';
+import { Box, Container } from 'rebass';
 
 import Home from '../Home';
+import Party from '../Party';
 import Response from '../Response';
 import WishList from '../WishList';
 import Header from '../Header';
@@ -38,6 +39,7 @@ class App extends React.Component<Props> {
 					<Main>
 						<Route exact path={urls.home.url} component={Home} />
 						<Route path={urls.response.url} component={Response} />
+						<Route path={urls.party.url} component={Party} />
 						<Route path={urls.wishList.url} component={WishList} />
 						<Route path={urls.cakeList.url} component={CakeList} />
 						<Route path={urls.impressum.url} component={Impressum} />
