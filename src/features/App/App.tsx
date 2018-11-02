@@ -17,17 +17,15 @@ import CakeList from '../CakeList';
 import Footer from './Footer';
 import Main from './Main';
 
-interface State {}
 interface Props {
 	className?: string;
 }
 
-class App extends React.Component<Props, State> {
+class App extends React.Component<Props> {
 
 	history: any;
 	constructor(props: Props) {
 		super(props);
-		this.state = { date: '' };
 		this.history = createBrowserHistory();
 	}
 
