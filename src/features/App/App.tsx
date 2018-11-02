@@ -11,6 +11,7 @@ import WishList from '../WishList';
 import Header from '../Header';
 import appStyles from './App.styles';
 import urls from '../../shared/urls';
+import CakeList from '../CakeList';
 
 interface State {}
 interface Props {
@@ -37,6 +38,7 @@ class App extends React.Component<Props, State> {
 							<Route path={urls.countDown.url} component={CountDown} />
 							<Route path={urls.response.url} component={Response} />
 							<Route path={urls.wishList.url} component={WishList} />
+							<Route path={urls.cakeList.url} component={CakeList} />
 						</Container>
 					</main>
 				</div>
