@@ -8,7 +8,7 @@ interface Props {
 	className?: string;
 }
 
-export class LoadingSpinner extends React.PureComponent<Props> {
+class LoadingSpinner extends React.PureComponent<Props> {
 	render() {
 		return (
 			<div className={this.props.className}>
