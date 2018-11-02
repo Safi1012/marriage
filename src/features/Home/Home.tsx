@@ -3,7 +3,6 @@ import styled, { StyledComponentClass, css } from 'styled-components';
 import { responsiveStyle } from 'styled-system';
 
 import { isLoggedIn, loginWithGoogle, logout } from '../../services/authentication';
-import Counter from '../Counter/Counter';
 import Button from '../../common/Button';
 import { Flex, Container } from 'rebass';
 import theme from '../../common/theme';
@@ -50,7 +49,6 @@ class Home extends React.Component<Props, State> {
 						</Link>
 					</Flex>
 
-					{this.state.isLoggedIn && <Counter />}
 					<Button onClick={loginWithGoogle} hidden={this.state.isLoggedIn}>login</Button>
 					<Button onClick={logout} hidden={!this.state.isLoggedIn}>logout</Button>
 				</Container>
