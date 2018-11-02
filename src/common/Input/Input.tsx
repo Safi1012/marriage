@@ -8,7 +8,7 @@ export default styled.input`
 	line-height: 1.15;
 	border-width: 0 0 1px 0;
 	border-style: solid;
-	border-color: ${theme.colors.textcolor};
+	border-color: ${theme.colors.textColor};
 	width: 100%;
 	margin-bottom: 12px;
 
