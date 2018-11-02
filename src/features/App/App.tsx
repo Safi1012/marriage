@@ -1,6 +1,7 @@
 import * as React from 'react';
 import styled from 'styled-components';
 import { Router, Route } from 'react-router';
+import { Link } from 'react-router-dom';
 import createBrowserHistory from 'history/createBrowserHistory';
 import { Container } from 'rebass';
 
@@ -9,9 +10,12 @@ import CountDown from '../CountDown';
 import Response from '../Response';
 import WishList from '../WishList';
 import Header from '../Header';
+import Impressum from '../Impressum';
 import appStyles from './App.styles';
 import urls from '../../shared/urls';
 import CakeList from '../CakeList';
+import Footer from './Footer';
+import Main from './Main';
 
 interface State {}
 interface Props {
@@ -32,15 +36,21 @@ class App extends React.Component<Props, State> {
 			<Router history={this.history}>
 				<div className={this.props.className}>
 					<Header />
-					<main>
+					<Main>
 						<Container>
 							<Route exact path={urls.home.url} component={Home} />
 							<Route path={urls.countDown.url} component={CountDown} />
 							<Route path={urls.response.url} component={Response} />
 							<Route path={urls.wishList.url} component={WishList} />
 							<Route path={urls.cakeList.url} component={CakeList} />
+							<Route path={urls.impressum.url} component={Impressum} />
 						</Container>
-					</main>
+					</Main>
+					<Footer>
+						<Container>
+							<Link to={urls.impressum.url}>{urls.impressum.displayName}</Link>
+						</Container>
+					</Footer>
 				</div>
 			</Router>
 		);

@@ -1,9 +1,10 @@
 import { css } from 'styled-components';
 
 const AppStyles = css`
+	position: relative;
 	* {
-		font-family: 'Open Sans', sans-serif;
 		box-sizing: border-box;
+		font-family: 'Open Sans', sans-serif;
 	}
 `;
 
