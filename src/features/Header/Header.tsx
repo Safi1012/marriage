@@ -34,6 +34,7 @@ class Header extends React.Component<Props> {
 
 	render() {
 		return (
+<<<<<<< HEAD
 			<div className={this.props.className}>
 				<FlexMaxHeight justify-content="center" align="center">
 					<ContainerMaxHeight>
@@ -44,11 +45,28 @@ class Header extends React.Component<Props> {
 					</ContainerMaxHeight>
 				</FlexMaxHeight>
 			</div>
+=======
+			<Fixed className={this.props.className}>
+				<FlexMaxHeight justify-content="center" align="center">
+					<ContainerMaxHeight>
+						{this.renderLink(urls.home)}
+						{this.renderLink(urls.countDown)}
+						{this.renderLink(urls.response)}
+						{this.renderLink(urls.wishList)}
+					</ContainerMaxHeight>
+				</FlexMaxHeight>
+			</Fixed>
+>>>>>>> Make navbar fixed
 		);
 
 	}
 }
 
+const Fixed = styled.div`
+	position: fixed;
+	width: 100%;
+	z-index: 99;
+`;
 const ContainerMaxHeight = styled(Container)`
 	height: 100%;
 `;

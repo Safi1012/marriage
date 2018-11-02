@@ -3,6 +3,7 @@ import theme from '../../common/theme';
 
 const HeaderStyles = css`
 	width: 100%;
+<<<<<<< HEAD
 	background: linear-gradient(${theme.colors.primaryColor}, ${theme.colors.primaryColorDark});
 	box-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
 	color: white;
@@ -10,6 +11,12 @@ const HeaderStyles = css`
 	position: sticky;
 	top: 0;
 	z-index: 99;
+=======
+	background-color: ${theme.colors.primaryColor};
+	box-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+	color: white;
+	text-align: center;
+>>>>>>> Make navbar fixed
 `;
 
 export default HeaderStyles;
