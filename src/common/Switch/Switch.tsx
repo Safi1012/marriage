@@ -2,21 +2,29 @@ import * as React from 'react';
 import styled from 'styled-components';
 
 interface Props {
-	className?: string;
 	options: string[];
+	name: string;
+	onChange: (selected: string) => void;
+	selected?: string;
+	className?: string;
 }
 
 class Switch extends React.Component<Props, {}> {
+	handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+		this.props.onChange(event.target.value);
+	}
+
 	render() {
-		const { options, className } = this.props;
-		
+		const { options, name, className } = this.props;
+
+
 		return (
 			<Div className={className}>
 				{
 					options.map((option: string) => (
 						<div key={option}>
-							<Input type="radio" id={option} name="drone" value={option} />
-							<Label htmlFor={option}>{option}</Label>
+							<Input type="radio" id={`${option}-${name}`} name={this.props.name} value={option} onChange={this.handleChange} checked={this.props.selected === option}/>
+							<Label htmlFor={`${option}-${name}`}>{option}</Label>
 						</div>
 						)
 					)
@@ -35,7 +43,7 @@ const Div = styled.div`
 `;
 
 const Input = styled.input`
-	position: absolute !important;
+	position: absolute;
 	clip: rect(0, 0, 0, 0);
 	overflow: hidden;
 
@@ -50,7 +58,7 @@ const Label = styled.label`
 	display: inline-block;
 	color: rgba(0, 0, 0, 0.6);
 	text-align: center;
-	padding: 6px 14px;  
+	padding: 6px 14px;
 	border: 1px solid darkgray;
 	transition: all 0.1s ease-in-out;
 
