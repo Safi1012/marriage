@@ -42,6 +42,7 @@ class Header extends React.Component<Props, State> {
 					{this.renderLink(urls.countDown)}
 					{this.renderLink(urls.response)}
 					{this.renderLink(urls.wishList)}
+					{this.renderLink(urls.cakeList)}
 				</Container>
 			</StyledHeader>
 		);

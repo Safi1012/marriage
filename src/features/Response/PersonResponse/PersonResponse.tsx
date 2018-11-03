@@ -1,9 +1,9 @@
-import styled from 'styled-components';
 import * as React from 'react';
 import { Box, Button, Flex } from 'rebass';
 
 import { PersonWithKey } from '../Response';
-import Input from '../../../common/Input/Input';
+import Input from '../../../common/Input';
+import Label from '../../../common/Label';
 
 interface State {}
 interface Props {
@@ -72,7 +72,5 @@ const FlexBox = Box.extend`
 const BigInput = Input.extend`
 	font-size: 1.5em;
 `;
-
-const Label = styled.label``;
 
 export default ResponsePerson;
