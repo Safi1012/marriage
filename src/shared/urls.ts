@@ -24,4 +24,8 @@ export default {
 		displayName: 'Kuchenliste',
 		url: '/cakeList',
 	},
+	impressum: {
+		displayName: 'Impressum',
+		url: '/impressum',
+	},
 };
