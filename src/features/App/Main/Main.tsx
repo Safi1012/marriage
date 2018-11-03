@@ -1,5 +1,5 @@
 import styled from 'styled-components';
 
 export default styled.main`
-	padding-bottom: 70px;
+	flex-basis: 1 0 auto;
 `;
