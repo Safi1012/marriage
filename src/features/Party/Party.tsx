@@ -1,5 +1,6 @@
 import * as React from 'react';
 import styled, { StyledComponentClass, css } from 'styled-components';
+import { Container } from 'rebass';
 
 
 export interface Props {
@@ -9,14 +10,14 @@ export interface Props {
 class Party extends React.Component<Props> {
 	render() {
 		return (
-			<div>
+			<Container>
 				<Heading>Örtlichkeit</Heading>
 				<Image src={require('./kasino_ettlingen_1.jpg')} />
 				<Heading>Programm</Heading>
 					12 Uhr		Do it
 				<Heading>Anfahrt</Heading>
 				Google Maps
-			</div>
+			</Container>
 		);
 	}
 }

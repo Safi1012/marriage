@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { Router, Route } from 'react-router';
 import { Link } from 'react-router-dom';
 import createBrowserHistory from 'history/createBrowserHistory';
-import { Box, Container } from 'rebass';
+import { Container } from 'rebass';
 
 import Home from '../Home';
 import Party from '../Party';
@@ -33,9 +33,8 @@ class App extends React.Component<Props> {
 		return (
 			<Router history={this.history}>
 				<div className={this.props.className}>
-					<Box mb="20px">
-						<Header />
-					</Box>
+					<Header />
+
 					<Main>
 						<Route exact path={urls.home.url} component={Home} />
 						<Route path={urls.response.url} component={Response} />
