@@ -7,6 +7,6 @@ export default css`
 	border: 0;
 	border-radius: 0px;
 	font: inherit;
-	font-family: 'Lato', sans-serif;
 	vertical-align: baseline;
+	outline: none;
 `;

@@ -1,10 +1,11 @@
 import * as React from 'react';
-import { Heading, Flex, Card, Button, Box } from 'rebass';
+import { Heading, Flex, Card, Box, Container } from 'rebass';
 import styled from 'styled-components';
 import { connect } from 'react-firebase';
 
 import { App } from '../../services/firebase';
 import addCurrentUser, { InjetedCurrentUserProps } from '../../hocs/addCurrentUser';
+import Button from '../../common/Button';
 import theme from '../../common/theme';
 
 
@@ -102,10 +103,10 @@ class WishList extends React.Component<Props, State> {
 
 	render() {
 		return (
-			<div>
+			<Container>
 				<Heading level={2}>Wunschliste</Heading>
 				{this.objectToArray(this.props.wishProducts).map(this.renderProduct)}
-			</div>
+			</Container>
 		);
 	}
 }

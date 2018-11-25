@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Heading, Button } from 'rebass';
+import { Heading, Button, Container } from 'rebass';
 import { connect } from 'react-firebase';
 
 import { App } from '../../services/firebase';
@@ -76,7 +76,7 @@ class CakeList extends React.Component<Props, State> {
 
 	render() {
 		return (
-			<div>
+			<Container>
 				<Heading level={2}>Kuchenübersicht</Heading>
 				<table>
 					<thead>
@@ -111,7 +111,7 @@ class CakeList extends React.Component<Props, State> {
 						</tr>
 					</tbody>
 				</table>
-			</div>
+			</Container>
 		);
 	}
 }
