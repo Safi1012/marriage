@@ -8,10 +8,6 @@ export default {
 		displayName: 'Home',
 		url: '/',
 	},
-	countDown: {
-		displayName: 'Countdown',
-		url: '/countDown',
-	},
 	response: {
 		displayName: 'Rückmeldung',
 		url: '/response',
