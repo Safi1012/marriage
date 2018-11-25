@@ -7,9 +7,11 @@ import Form from '../../common/Form';
 import { App } from '../../services/firebase';
 import addCurrentUser, { InjetedCurrentUserProps } from '../../hocs/addCurrentUser';
 import PersonResponse from './PersonResponse';
+import LoadingSpinner from '../../common/LoadingSpinner';
 
 interface State {
 	persons: PersonWithKey[];
+	isLoading: boolean;
 }
 
 interface ExternalProps {}
@@ -38,12 +40,16 @@ class Response extends React.Component<Props, State> {
 		super(props);
 		this.state = {
 			persons: this.personPropsToPersonState(props.persons),
+			isLoading: true,
 		};
 	}
 
 	componentWillReceiveProps(nextProps: Props) {
 		if (nextProps.persons !== this.props.persons) {
 			this.setState({ persons: this.personPropsToPersonState(nextProps.persons) });
+		}
+		if (this.props.persons === undefined && nextProps.persons !== undefined) {
+			this.setState({ isLoading: false });
 		}
 	}
 
@@ -80,25 +86,29 @@ class Response extends React.Component<Props, State> {
 		return (
 			<Container>
 				<Heading level={2}>Rückmeldung</Heading>
-				<Card>
-					<Box p={2}>
-						Wir kommen mit:
-						<Form onSubmit={this.onSubmit}>
+				{this.state.isLoading && <LoadingSpinner />}
+				{!this.state.isLoading &&
+					<Card>
+						<Box p={2}>
+							Wir kommen mit:
+							<Form onSubmit={this.onSubmit}>
 
-							<Box mb={4}>
-								{this.state.persons.map(this.personResponse)}
+								<Box mb={4}>
+									{this.state.persons.map(this.personResponse)}
+
+									<FullWithFlex justify="flex-end">
+										<ButtonOutline onClick={this.addPerson} type="button">Einer Person mehr</ButtonOutline>
+									</FullWithFlex>
+								</Box>
 
 								<FullWithFlex justify="flex-end">
-									<ButtonOutline onClick={this.addPerson} type="button">Einer Person mehr</ButtonOutline>
+									<SubmitButton type="submit">{this.props.responded ? 'Abgeschickt' : 'Abschicken'}</SubmitButton>
 								</FullWithFlex>
-							</Box>
 
-							<FullWithFlex justify="flex-end">
-								<SubmitButton type="submit">{this.props.responded ? 'Abgeschickt' : 'Abschicken'}</SubmitButton>
-							</FullWithFlex>
-						</Form>
-					</Box>
-				</Card>
+							</Form>
+						</Box>
+					</Card>
+				}
 			</Container>
 		);
 	}

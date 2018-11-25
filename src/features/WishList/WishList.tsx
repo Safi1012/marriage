@@ -7,9 +7,11 @@ import { App } from '../../services/firebase';
 import addCurrentUser, { InjetedCurrentUserProps } from '../../hocs/addCurrentUser';
 import Button from '../../common/Button';
 import theme from '../../common/theme';
+import LoadingSpinner from '../../common/LoadingSpinner';
 
 
 interface State {
+	isLoading: boolean;
 }
 
 interface ExternalProps {}
@@ -31,6 +33,19 @@ export interface WishProductWithKey extends WishProduct {
 }
 
 class WishList extends React.Component<Props, State> {
+
+	constructor(props: Props) {
+		super(props);
+		this.state = {
+			isLoading: true,
+		};
+	}
+
+	componentWillReceiveProps(nextProps: Props) {
+		if (this.props.wishProducts === undefined && nextProps.wishProducts !== undefined) {
+			this.setState({ isLoading: false });
+		}
+	}
 
 	objectToArray(object: {[key: string]: WishProduct}): WishProductWithKey[] {
 		if (object) {
@@ -105,6 +120,7 @@ class WishList extends React.Component<Props, State> {
 		return (
 			<Container>
 				<Heading level={2}>Wunschliste</Heading>
+				{this.state.isLoading && <LoadingSpinner />}
 				{this.objectToArray(this.props.wishProducts).map(this.renderProduct)}
 			</Container>
 		);
