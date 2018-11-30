@@ -1,7 +1,24 @@
+import * as React from 'react';
 import styled from 'styled-components';
+import { Container } from 'rebass'
+
 import theme from '../../../common/theme';
 
-export default styled.footer`
+interface Props {}
+class Footer extends React.PureComponent<Props> {
+
+	render() {
+		return (
+			<footer>
+				<Container>
+					{this.props.children}
+				</Container>
+			</footer>
+		)
+	}
+}
+
+export default styled(Footer)`
 	margin-top: 20px;
 	padding: 1rem;
 	text-align: right;

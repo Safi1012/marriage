@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import { Router, Route } from 'react-router';
 import { Link } from 'react-router-dom';
 import createBrowserHistory from 'history/createBrowserHistory';
-import { Container } from 'rebass';
 
 import Home from '../Home';
 import Party from '../Party';
@@ -44,9 +43,7 @@ class App extends React.Component<Props> {
 						<Route path={urls.impressum.url} component={Impressum} />
 					</Main>
 					<Footer>
-						<Container>
-							<Link to={urls.impressum.url}>{urls.impressum.displayName}</Link>
-						</Container>
+						<Link to={urls.impressum.url}>{urls.impressum.displayName}</Link>
 					</Footer>
 				</div>
 			</Router>
