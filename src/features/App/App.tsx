@@ -2,7 +2,11 @@ import * as React from 'react';
 import styled from 'styled-components';
 import { Route, RouteComponentProps, withRouter } from 'react-router';
 import { Link } from 'react-router-dom';
+<<<<<<< HEAD
 import { Flex } from 'rebass';
+=======
+import createBrowserHistory from 'history/createBrowserHistory';
+>>>>>>> Move Container into Footer
 
 import Home from '../Home';
 import Party from '../Party';
