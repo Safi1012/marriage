@@ -38,6 +38,7 @@ class Header extends React.Component<Props> {
 				<FlexMaxHeight justify-content="center" align="center">
 					<ContainerMaxHeight>
 						{this.renderLink(urls.home)}
+						{this.renderLink(urls.party)}
 						{this.renderLink(urls.response)}
 						{this.renderLink(urls.wishList)}
 						{this.renderLink(urls.cakeList)}

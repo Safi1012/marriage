@@ -8,6 +8,10 @@ export default {
 		displayName: 'Home',
 		url: '/',
 	},
+	party: {
+		displayName: 'Party',
+		url: '/party',
+	},
 	response: {
 		displayName: 'Rückmeldung',
 		url: '/response',
