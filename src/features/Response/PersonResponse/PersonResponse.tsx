@@ -4,8 +4,11 @@ import { Box, Button, Flex } from 'rebass';
 import { PersonWithKey } from '../Response';
 import Input from '../../../common/Input';
 import Label from '../../../common/Label';
+import Switch from '../../../common/Switch';
 
-interface State {}
+interface State {
+	switch: string;
+}
 interface Props {
 	person: PersonWithKey;
 	onUpdate: (person: PersonWithKey) => void;
@@ -13,6 +16,13 @@ interface Props {
 }
 
 class ResponsePerson extends React.Component<Props, State> {
+
+	constructor(props: Props) {
+		super(props);
+		this.state = {
+			switch: 'yes',
+		};
+	}
 
 	updateName = (event: React.ChangeEvent<HTMLInputElement>) => {
 		this.props.onUpdate({
@@ -26,6 +36,11 @@ class ResponsePerson extends React.Component<Props, State> {
 			...this.props.person,
 			allergies: event.target.value,
 		});
+	}
+
+	handleChange = (e: string) => {
+		console.log(e);
+		this.setState({ switch: e });
 	}
 
 	delete = () => {
@@ -43,6 +58,7 @@ class ResponsePerson extends React.Component<Props, State> {
 						X
 					</RemoveButton>
 				</Flex>
+				<Switch name="test" options={[ 'yes', 'no' ]} selected={this.state.switch} onChange={this.handleChange}/>
 				<FlexBox>
 					<Box pr="3px">
 						Ich esse ... und habe die folgenden

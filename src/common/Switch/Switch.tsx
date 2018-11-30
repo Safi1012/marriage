@@ -44,6 +44,7 @@ const Div = styled.div`
 
 const Input = styled.input`
 	position: absolute;
+	border-radius: 5px;
 	clip: rect(0, 0, 0, 0);
 	overflow: hidden;
 
@@ -54,6 +55,7 @@ const Input = styled.input`
 	}
 `;
 
+// TODO: Needs border-radius 4px
 const Label = styled.label`
 	display: inline-block;
 	color: rgba(0, 0, 0, 0.6);
