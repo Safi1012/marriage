@@ -1,5 +1,7 @@
 import * as React from 'react';
 import styled from 'styled-components';
+import { Flex, Box } from 'rebass';
+
 
 interface Props {
 	options: string[];
@@ -19,24 +21,29 @@ class Switch extends React.Component<Props, {}> {
 
 
 		return (
-			<Div className={className}>
+			<BorderedBox p="40px" width={1} className={className}>
+				<FlexFullWidth align="stretch">
 				{
 					options.map((option: string) => (
-						<div key={option}>
+						<Box width={1} key={option}>
 							<Input type="radio" id={`${option}-${name}`} name={this.props.name} value={option} onChange={this.handleChange} checked={this.props.selected === option}/>
 							<Label htmlFor={`${option}-${name}`}>{option}</Label>
-						</div>
+						</Box>
 						)
 					)
 				}
-			</Div>
+				</FlexFullWidth>
+			</BorderedBox>
 		);
 	}
 }
 
-const Div = styled.div`
+const FlexFullWidth = Flex.extend`
+	width: 100%;
+`;
+
+const BorderedBox = Box.extend`
 	display: flex;
-	justify-content: flex-start;
 	padding: 40px;
 	border: 1px solid darkgray;
 	border-radius: 5px;
@@ -58,6 +65,7 @@ const Input = styled.input`
 // TODO: Needs border-radius 4px
 const Label = styled.label`
 	display: inline-block;
+	width: 100%;
 	color: rgba(0, 0, 0, 0.6);
 	text-align: center;
 	padding: 6px 14px;
