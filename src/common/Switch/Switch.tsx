@@ -1,6 +1,7 @@
 import * as React from 'react';
 import styled from 'styled-components';
 import { Flex, Box } from 'rebass';
+import theme from '../theme';
 
 
 interface Props {
@@ -40,6 +41,12 @@ class Switch extends React.Component<Props, {}> {
 
 const FlexFullWidth = Flex.extend`
 	width: 100%;
+	& > div:first-child > Label {
+		border-radius: 4px 0 0 4px;
+	}
+	& > div:last-child > Label {
+		border-radius: 0 4px 4px 0;
+	}
 `;
 
 const BorderedBox = Box.extend`
@@ -54,15 +61,17 @@ const Input = styled.input`
 	border-radius: 5px;
 	clip: rect(0, 0, 0, 0);
 	overflow: hidden;
+	color: ${theme.colors.primaryColor};
 
 	&:checked + label {
-		background-color: #A5DC86;
+		background-color: ${theme.colors.primaryColor};
+		border-radius: 4px;
+		color: white;
 		-webkit-box-shadow: none;
 		box-shadow: none;
 	}
 `;
 
-// TODO: Needs border-radius 4px
 const Label = styled.label`
 	display: inline-block;
 	width: 100%;
