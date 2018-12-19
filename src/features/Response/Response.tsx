@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Card, Heading, Box, Flex, ButtonOutline, Container } from 'rebass';
+import { Heading, Box, Flex, Container } from 'rebass';
 import { connect } from 'react-firebase';
 
 import Button from '../../common/Button';
@@ -25,9 +25,22 @@ interface FirebaseInjectedProps {
 }
 interface Props extends ExternalProps, InjetedCurrentUserProps, FirebaseInjectedProps {}
 
-// meet, vegetarier, vegan switch
+export enum Participate {
+	Yes = 'Ja',
+	No = 'Nein',
+}
+
+export enum Food {
+	Meet = 'Fleisch',
+	Vegetary = 'Vegetarisch',
+	Vegan = 'Vegan',
+	Nothing = 'Nichts',
+}
+
 export interface Person {
 	name: string;
+	participate: Participate;
+	food: Food;
 	allergies: string;
 }
 export interface PersonWithKey extends Person {
@@ -70,16 +83,8 @@ class Response extends React.Component<Props, State> {
 		this.props.updatePerson(person);
 	}
 
-	deleteResponse = (person: PersonWithKey) => {
-		this.props.deleteResponse(person);
-	}
-
-	addPerson = () => {
-		this.props.addPerson({ name: '', allergies: '' });
-	}
-
 	personResponse = (person: PersonWithKey) => {
-		return <PersonResponse key={person.key} person={person} onUpdate={this.onPersonUpdate} delete={this.deleteResponse} />;
+		return <PersonResponse key={person.key} person={person} onUpdate={this.onPersonUpdate} />;
 	}
 
 	render() {
@@ -88,26 +93,17 @@ class Response extends React.Component<Props, State> {
 				<Heading level={2}>Rückmeldung</Heading>
 				{this.state.isLoading && <LoadingSpinner />}
 				{!this.state.isLoading &&
-					<Card>
-						<Box p={2}>
-							Wir kommen mit:
-							<Form onSubmit={this.onSubmit}>
-
-								<Box mb={4}>
-									{this.state.persons.map(this.personResponse)}
-
-									<FullWithFlex justify="flex-end">
-										<ButtonOutline onClick={this.addPerson} type="button">Einer Person mehr</ButtonOutline>
-									</FullWithFlex>
-								</Box>
+					<Box>
+						<Form onSubmit={this.onSubmit}>
+							<div>
+								{this.state.persons.map(this.personResponse)}
 
 								<FullWithFlex justify="flex-end">
 									<SubmitButton type="submit">{this.props.responded ? 'Abgeschickt' : 'Abschicken'}</SubmitButton>
 								</FullWithFlex>
-
-							</Form>
-						</Box>
-					</Card>
+							</div>
+						</Form>
+					</Box>
 				}
 			</Container>
 		);
@@ -125,10 +121,8 @@ const SubmitButton = Button.extend`
 const mapFirebaseToProps = (props: Props, ref: any, firebase: App) => ({
 	persons: `response/${props.currentUser && props.currentUser.uid}/persons`,
 	responded: `response/${props.currentUser && props.currentUser.uid}/responded`,
-	addPerson: (person: Person) => ref(`response/${props.currentUser && props.currentUser.uid}/persons`).push(person),
 	updateResponded: (responded: boolean) => ref(`response/${props.currentUser && props.currentUser.uid}/responded`).set(responded),
 	updatePerson: (person: PersonWithKey) => ref(`response/${props.currentUser && props.currentUser.uid}/persons/${person.key}`).set({ name: person.name, allergies: person.allergies }),
-	deleteResponse: (person: PersonWithKey) => ref(`response/${props.currentUser && props.currentUser.uid}/persons/${person.key}`).remove(),
 });
 export default addCurrentUser()(
 	connect(
