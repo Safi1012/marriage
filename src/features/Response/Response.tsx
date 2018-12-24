@@ -8,10 +8,13 @@ import { App } from '../../services/firebase';
 import addCurrentUser, { InjetedCurrentUserProps } from '../../hocs/addCurrentUser';
 import PersonResponse from './PersonResponse';
 import LoadingSpinner from '../../common/LoadingSpinner';
+import Label from '../../common/Label';
+import Input from '../../common/Input';
 
 interface State {
 	persons: PersonWithKey[];
 	isLoading: boolean;
+	mailUpdate: string;
 }
 
 interface ExternalProps {}
@@ -71,6 +74,7 @@ class Response extends React.Component<Props, State> {
 				},
 			],
 			isLoading: true,
+			mailUpdate: '',
 		};
 	}
 
@@ -118,6 +122,11 @@ class Response extends React.Component<Props, State> {
 		this.props.updatePerson(person);
 	}
 
+	onMailUpdate = (event: React.ChangeEvent<HTMLInputElement>) => {
+		this.setState({ mailUpdate: event.target.value });
+	};
+
+
 	render() {
 		return (
 			<Container>
@@ -134,6 +143,9 @@ class Response extends React.Component<Props, State> {
 											</Box>
 									))}
 								</FullWithFlex>
+
+								<Label htmlFor="mailUpdates">EMail für Updates:</Label>
+								<Input placeholder="z.B. Arne_Maier@gmx.de" type="text" id="mailUpdates" value={this.state.mailUpdate} onChange={this.onMailUpdate}/>
 
 								<FullWithFlex justify="flex-end">
 									<SubmitButton type="submit">{this.props.responded ? 'Abgeschickt' : 'Abschicken'}</SubmitButton>
