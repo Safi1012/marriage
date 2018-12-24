@@ -1,9 +1,12 @@
 import * as React from 'react';
-import { Card, Flex } from 'rebass';
+import { Flex } from 'rebass';
+import styled from 'styled-components';
 
 import { PersonWithKey, Food, Participate } from '../Response';
 import Input from '../../../common/Input';
 import Switch from '../../../common/Switch';
+import Card from '../../../common/Card';
+import { H2 } from '../../../common/headlines';
 
 interface State {}
 
@@ -13,6 +16,9 @@ interface Props {
 }
 
 class ResponsePerson extends React.Component<Props, State> {
+	constructor(props: Props) {
+		super(props);
+	}
 
 	updateAllergie = (event: React.ChangeEvent<HTMLInputElement>) => {
 		this.props.onUpdate({
@@ -40,28 +46,26 @@ class ResponsePerson extends React.Component<Props, State> {
 			<Card>
 				<div>
 					<FlexFullWidth justify="center">
-						<h2>{this.props.person.name}</h2>
+						<H2>{this.props.person.name}</H2>
 					</FlexFullWidth>
 
-					<FlexFullWidth>
-						<p>Ich nehme Teil?</p>
-						<Switch name="participate" options={[ Participate.Yes, Participate.No ]} selected={this.props.person.participate} onChange={this.handleParticipation}/>
-					</FlexFullWidth>
+					<Question>Ich nehme Teil?</Question>
+					<Switch name={`participate-${this.props.person.key}`} options={[ Participate.Yes, Participate.No ]} selected={this.props.person.participate} onChange={this.handleParticipation} key={this.props.person.key + 'participate'}/>
 
-					<FlexFullWidth>
-						<p>Du isst?</p>
-						<Switch name="food" options={[ Food.Meet, Food.Vegetary, Food.Vegan, Food.Nothing ]} selected={this.props.person.food} onChange={this.handleFood}/>
-					</FlexFullWidth>
+					<Question>Du isst?</Question>
+					<Switch name={`food-${this.props.person.key}`} options={[ Food.Meet, Food.Vegetary, Food.Vegan, Food.Nothing ]} selected={this.props.person.food} onChange={this.handleFood}/>
 
-					<FlexFullWidth>
-						<p>Hast du Essensallergien?</p>
-						<Input placeholder="z.B. Laktose" type="text" value={this.props.person.allergies} onChange={this.updateAllergie}/>
-					</FlexFullWidth>
+					<Question>Hast du Essensallergien?</Question>
+					<Input placeholder="z.B. Laktose" type="text" value={this.props.person.allergies} onChange={this.updateAllergie}/>
 				</div>
 			</Card>
 		);
 	}
 }
+
+const Question = styled.p`
+	margin-top: 40px;
+`;
 
 const FlexFullWidth = Flex.extend`
 	width: 100%;

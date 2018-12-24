@@ -52,14 +52,49 @@ class Response extends React.Component<Props, State> {
 	constructor(props: Props) {
 		super(props);
 		this.state = {
-			persons: this.personPropsToPersonState(props.persons),
+			// persons: this.personPropsToPersonState(props.persons),
+
+			persons: [
+				{
+					key: 'uaenardu',
+					name: 'Arne Maier',
+					participate: Participate.Yes,
+					food: Food.Vegan,
+					allergies: 'non',
+				},
+				{
+					key: 'ianruedtiranoetu',
+					name: 'Lisa Mangler',
+					participate: Participate.Yes,
+					food: Food.Vegan,
+					allergies: 'non',
+				},
+			],
 			isLoading: true,
 		};
 	}
 
 	componentWillReceiveProps(nextProps: Props) {
 		if (nextProps.persons !== this.props.persons) {
-			this.setState({ persons: this.personPropsToPersonState(nextProps.persons) });
+			// this.setState({ persons: this.personPropsToPersonState(nextProps.persons) });
+			this.setState({
+				persons: [
+					{
+						key: 'uaenardu',
+						name: 'Arne Maier',
+						participate: Participate.No,
+						food: Food.Vegan,
+						allergies: 'non',
+					},
+					{
+						key: 'ianruedtiranoetu',
+						name: 'Lisa Mangler',
+						participate: Participate.Yes,
+						food: Food.Vegetary,
+						allergies: 'noneee',
+					},
+				],
+			});
 		}
 		if (this.props.persons === undefined && nextProps.persons !== undefined) {
 			this.setState({ isLoading: false });
@@ -83,10 +118,6 @@ class Response extends React.Component<Props, State> {
 		this.props.updatePerson(person);
 	}
 
-	personResponse = (person: PersonWithKey) => {
-		return <PersonResponse key={person.key} person={person} onUpdate={this.onPersonUpdate} />;
-	}
-
 	render() {
 		return (
 			<Container>
@@ -96,7 +127,13 @@ class Response extends React.Component<Props, State> {
 					<Box>
 						<Form onSubmit={this.onSubmit}>
 							<div>
-								{this.state.persons.map(this.personResponse)}
+								<FullWithFlex justify="space-between" wrap>
+									{this.state.persons.map((person: PersonWithKey) => (
+											<Box width={[ 1, 1, 0.5 ]} key={person.key}>
+												<PersonResponse person={person} onUpdate={this.onPersonUpdate} />
+											</Box>
+									))}
+								</FullWithFlex>
 
 								<FullWithFlex justify="flex-end">
 									<SubmitButton type="submit">{this.props.responded ? 'Abgeschickt' : 'Abschicken'}</SubmitButton>
