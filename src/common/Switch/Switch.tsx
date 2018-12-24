@@ -5,36 +5,35 @@ import theme from '../theme';
 
 
 interface Props {
-	options: string[];
 	name: string;
 	onChange: (selected: string) => void;
+	options: string[];
 	selected?: string;
 	className?: string;
 }
 
 class Switch extends React.Component<Props, {}> {
+
+
 	handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		this.props.onChange(event.target.value);
 	}
 
 	render() {
-		const { options, name, className } = this.props;
-
+		const { options, className } = this.props;
 
 		return (
-			<BorderedBox p="40px" width={1} className={className}>
-				<FlexFullWidth align="stretch">
-				{
-					options.map((option: string) => (
-						<Box width={1} key={option}>
-							<Input type="radio" id={`${option}-${name}`} name={this.props.name} value={option} onChange={this.handleChange} checked={this.props.selected === option}/>
-							<Label htmlFor={`${option}-${name}`}>{option}</Label>
-						</Box>
-						)
+			<FlexFullWidth align="stretch" className={className}>
+			{
+				options.map((option: string) => (
+					<Box width={1} key={option}>
+						<Input type="radio" id={`${this.props.name}-${option}`} name={this.props.name} value={option} onChange={this.handleChange} checked={this.props.selected === option}/>
+						<Label htmlFor={`${this.props.name}-${option}`}>{option}</Label>
+					</Box>
 					)
-				}
-				</FlexFullWidth>
-			</BorderedBox>
+				)
+			}
+			</FlexFullWidth>
 		);
 	}
 }
@@ -49,13 +48,6 @@ const FlexFullWidth = Flex.extend`
 	}
 `;
 
-const BorderedBox = Box.extend`
-	display: flex;
-	padding: 40px;
-	border: 1px solid darkgray;
-	border-radius: 5px;
-`;
-
 const Input = styled.input`
 	position: absolute;
 	border-radius: 5px;
@@ -65,7 +57,6 @@ const Input = styled.input`
 
 	&:checked + label {
 		background-color: ${theme.colors.primaryColor};
-		border-radius: 4px;
 		color: white;
 		-webkit-box-shadow: none;
 		box-shadow: none;
