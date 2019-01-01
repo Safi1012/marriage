@@ -2,31 +2,17 @@ import * as React from 'react';
 import styled, { StyledComponentClass, css } from 'styled-components';
 import { responsiveStyle } from 'styled-system';
 
-import { isLoggedIn, loginWithGoogle, logout } from '../../services/authentication';
 import Button from '../../common/Button';
 import { Flex, Container } from 'rebass';
 import theme from '../../common/theme';
 import urls from '../../shared/urls';
 
 
-interface State {
-	isLoggedIn: boolean;
-	user?: any;
-}
+interface State {}
 interface Props {}
 
 class Home extends React.Component<Props, State> {
 
-	constructor(props: Props) {
-		super(props);
-		this.state = {
-			isLoggedIn: false,
-		};
-	}
-
-	componentDidMount() {
-		isLoggedIn.subscribe(isLoggedIn => this.setState({ isLoggedIn }));
-	}
 
 	render() {
 		return (
@@ -48,9 +34,6 @@ class Home extends React.Component<Props, State> {
 							</Button>
 						</Link>
 					</Flex>
-
-					<Button onClick={loginWithGoogle} hidden={this.state.isLoggedIn}>login</Button>
-					<Button onClick={logout} hidden={!this.state.isLoggedIn}>logout</Button>
 				</Container>
 			</div>
 		);

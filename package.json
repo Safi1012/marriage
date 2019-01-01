@@ -10,6 +10,7 @@
     "@types/react-router-dom": "^4.2.3",
     "@types/styled-system": "^2.3.0",
     "firebase": "4.8.0",
+    "path-to-regexp": "^2.4.0",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-firebase": "^2.2.8",
