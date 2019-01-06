@@ -1,6 +1,6 @@
 import * as React from 'react';
 import styled from 'styled-components';
-import { Container } from 'rebass'
+import { Container } from 'rebass';
 
 import theme from '../../../common/theme';
 
@@ -14,7 +14,7 @@ class Footer extends React.PureComponent<Props> {
 					{this.props.children}
 				</Container>
 			</footer>
-		)
+		);
 	}
 }
 

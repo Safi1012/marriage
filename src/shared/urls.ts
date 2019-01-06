@@ -1,3 +1,5 @@
+import { compile } from 'path-to-regexp';
+
 export interface Route {
 	displayName: string;
 	url: string;
@@ -6,7 +8,7 @@ export interface Route {
 export default {
 	home: {
 		displayName: 'Home',
-		url: '/',
+		url: '/home',
 	},
 	party: {
 		displayName: 'Party',
@@ -27,5 +29,10 @@ export default {
 	impressum: {
 		displayName: 'Impressum',
 		url: '/impressum',
+	},
+	login: {
+		displayName: 'Einloggen',
+		rawUrl: '/login/:loginCode?',
+		url: compile('/login/:loginCode?'),
 	},
 };
