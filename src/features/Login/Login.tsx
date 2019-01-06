@@ -9,15 +9,19 @@ import { Flex, Container, Box } from 'rebass';
 import theme from '../../common/theme';
 import Input from '../../common/Input';
 import urls from '../../shared/urls';
+import { Subscription } from 'rxjs';
 
 
 interface State {
 	loginCode: string;
 	isLoggedIn: boolean;
+	error: boolean;
 }
 interface Props extends RouteComponentProps<{ loginCode?: string }> {}
 
 class Login extends React.Component<Props, State> {
+
+	private loginSubscription: Subscription;
 
 	constructor(props: Props) {
 		super(props);
@@ -25,25 +29,28 @@ class Login extends React.Component<Props, State> {
 		this.state = {
 			loginCode: loginCodeFromPath ? loginCodeFromPath : '',
 			isLoggedIn: false,
+			error: false,
 		};
 	}
 
 	componentDidMount() {
-		isLoggedIn.subscribe((isLoggedIn) => {
-			this.setState({ isLoggedIn });
-			console.log('sub');
-			if (isLoggedIn) {
-				console.log('logged in');
-				this.props.history.push(urls.home.url);
-			} else {
-				console.log('Not logged in');
-				console.log(this.state.loginCode);
-				if (LoginCodePattern.test(this.state.loginCode)) {
-					console.log('loggin in');
-					signIn(this.state.loginCode);
+		this.loginSubscription = isLoggedIn.subscribe((isLoggedIn) => {
+			this.setState({ isLoggedIn }, () => {
+				if (isLoggedIn) {
+					this.props.history.push(urls.home.url);
+				} else {
+					if (LoginCodePattern.test(this.state.loginCode)) {
+						signIn(this.state.loginCode);
+					}
 				}
-			}
+			});
 		});
+	}
+
+	componentWillUnmount() {
+		if (this.loginSubscription) {
+			this.loginSubscription.unsubscribe();
+		}
 	}
 
 	render() {
@@ -51,12 +58,10 @@ class Login extends React.Component<Props, State> {
 			<div>
 
 				<Container>
-					<Flex justify="center" align="center">
-					<Box width={1}>
+					<Flex column justify="center" align="center" wrap>
 						<Heading fontSize={[ '100px', '120px' ]}>Login</Heading>
-					</Box>
-					{this.state.isLoggedIn && this.renderLogout()}
-					{!this.state.isLoggedIn && this.renderLogin()}
+						{this.state.isLoggedIn && this.renderLogout()}
+						{!this.state.isLoggedIn && this.renderLogin()}
 
 					</Flex>
 				</Container>
@@ -67,18 +72,31 @@ class Login extends React.Component<Props, State> {
 	renderLogout = () => <Button onClick={logout}>Logout</Button>;
 
 	renderLogin = () => (
-		<Box width={1} >
-			<Input type="text" placeholder="Logincode" value={this.state.loginCode} onChange={this.handleLoginCodeChange}/>
-			<Button onClick={this.handleSignInClick}>Login</Button>
+		<Box width={[ 1 , 0.5 ]} my="30px">
+			<form onSubmit={this.handleSignInClick}>
+				<Input type="text" placeholder="Logincode" value={this.state.loginCode} onChange={this.handleLoginCodeChange}/>
+				<FlexFullWidth justify="flex-end">
+					<Button type="submit" onClick={this.handleSignInClick}>Login</Button>
+				</FlexFullWidth>
+				{this.state.error && <p>Dein login hat leider nicht funktioniert, probiere es mit dem Code von der Einladung nocheinmal aus.</p>}
+			</form>
 		</Box>
 	)
 
-	handleSignInClick = () => signIn(this.state.loginCode);
+	handleSignInClick = (event: React.SyntheticEvent<any>) => {
+		event.preventDefault();
+		signIn(this.state.loginCode)
+			.catch(res => this.setState({ error: true }));
+	}
 
 	handleLoginCodeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		this.setState({ loginCode: event.target.value });
 	}
 }
+
+const FlexFullWidth = Flex.extend`
+	width: 100%;
+`;
 
 const Heading = styled.h1`
 	font-size: 120px;

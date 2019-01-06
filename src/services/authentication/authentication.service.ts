@@ -28,6 +28,12 @@ onAuthStateChanged.subscribe();
 
 const signIn = (loginCode: string) => {
 	return fetch(`http://localhost:8080/?loginCode=${loginCode}`)
+		.then((res) => {
+			if (res.status >= 400) {
+				throw res;
+			}
+			return res;
+		})
 		.then(res => res.json())
 		.then(token => firebaseApp.auth().signInWithCustomToken(token));
 };
