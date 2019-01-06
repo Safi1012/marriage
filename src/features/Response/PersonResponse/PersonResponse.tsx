@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Flex } from 'rebass';
 import styled from 'styled-components';
 
-import { PersonWithKey, Food, Participate } from '../Response';
+import { Person, Food, Participate } from '../Response';
 import Input from '../../../common/Input';
 import Switch from '../../../common/Switch';
 import Card from '../../../common/Card';
@@ -11,8 +11,8 @@ import { H2 } from '../../../common/headlines';
 interface State {}
 
 interface Props {
-	person: PersonWithKey;
-	onUpdate: (person: PersonWithKey) => void;
+	person: Person;
+	onUpdate: (person: Person) => void;
 }
 
 class ResponsePerson extends React.Component<Props, State> {

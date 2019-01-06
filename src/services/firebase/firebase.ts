@@ -1,6 +1,6 @@
 import * as firebase from 'firebase';
 
-interface User extends firebase.UserInfo{}
+interface User extends firebase.UserInfo {}
 interface Reference extends firebase.database.Reference{}
 interface App extends firebase.app.App{}
 interface Database extends firebase.database.Database{}

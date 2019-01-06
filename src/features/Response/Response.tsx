@@ -12,19 +12,20 @@ import Label from '../../common/Label';
 import Input from '../../common/Input';
 
 interface State {
-	persons: PersonWithKey[];
+	persons: Person[];
 	isLoading: boolean;
 	mailUpdate: string;
 }
 
 interface ExternalProps {}
 interface FirebaseInjectedProps {
-	persons: {[key: string]: Person};
+	persons: {[key: string]: PersonServerResponse};
 	responded: boolean;
-	addPerson: (person: Person) => any;
+	mailUpdate: string;
+	addPerson: (person: PersonServerResponse) => any;
 	updateResponded: (responded: boolean) => any;
-	updatePerson: (person: PersonWithKey) => any;
-	deleteResponse: (person: PersonWithKey) => any;
+	updatePerson: (person: Person) => any;
+	deleteResponse: (person: Person) => any;
 }
 interface Props extends ExternalProps, InjetedCurrentUserProps, FirebaseInjectedProps {}
 
@@ -40,13 +41,13 @@ export enum Food {
 	Nothing = 'Nichts',
 }
 
-export interface Person {
+export interface PersonServerResponse {
 	name: string;
 	participate: Participate;
 	food: Food;
 	allergies: string;
 }
-export interface PersonWithKey extends Person {
+export interface Person extends PersonServerResponse {
 	key: string;
 }
 
@@ -55,60 +56,25 @@ class Response extends React.Component<Props, State> {
 	constructor(props: Props) {
 		super(props);
 		this.state = {
-			// persons: this.personPropsToPersonState(props.persons),
-
-			persons: [
-				{
-					key: 'uaenardu',
-					name: 'Arne Maier',
-					participate: Participate.Yes,
-					food: Food.Vegan,
-					allergies: 'non',
-				},
-				{
-					key: 'ianruedtiranoetu',
-					name: 'Lisa Mangler',
-					participate: Participate.Yes,
-					food: Food.Vegan,
-					allergies: 'non',
-				},
-			],
-			isLoading: true,
+			persons: this.personPropsToPersonState(props.persons),
+			isLoading: !props.persons,
 			mailUpdate: '',
 		};
 	}
 
 	componentWillReceiveProps(nextProps: Props) {
 		if (nextProps.persons !== this.props.persons) {
-			// this.setState({ persons: this.personPropsToPersonState(nextProps.persons) });
-			this.setState({
-				persons: [
-					{
-						key: 'uaenardu',
-						name: 'Arne Maier',
-						participate: Participate.No,
-						food: Food.Vegan,
-						allergies: 'non',
-					},
-					{
-						key: 'ianruedtiranoetu',
-						name: 'Lisa Mangler',
-						participate: Participate.Yes,
-						food: Food.Vegetary,
-						allergies: 'noneee',
-					},
-				],
-			});
+			this.setState({ persons: this.personPropsToPersonState(nextProps.persons) });
 		}
 		if (this.props.persons === undefined && nextProps.persons !== undefined) {
 			this.setState({ isLoading: false });
 		}
 	}
 
-	personPropsToPersonState(persons: {[key: string]: Person}) {
+	personPropsToPersonState(persons: {[key: string]: PersonServerResponse}) {
 		if (persons) {
 			return Object.entries(persons)
-				.map(([ key, person ]: [string, Person]) => ({ ...person, key }));
+				.map(([ key, person ]: [string, PersonServerResponse]) => ({ ...person, key }));
 		}
 		return [];
 	}
@@ -118,13 +84,13 @@ class Response extends React.Component<Props, State> {
 		this.props.updateResponded(!this.props.responded);
 	}
 
-	onPersonUpdate = (person: PersonWithKey) => {
+	onPersonUpdate = (person: Person) => {
 		this.props.updatePerson(person);
 	}
 
 	onMailUpdate = (event: React.ChangeEvent<HTMLInputElement>) => {
 		this.setState({ mailUpdate: event.target.value });
-	};
+	}
 
 
 	render() {
@@ -137,7 +103,7 @@ class Response extends React.Component<Props, State> {
 						<Form onSubmit={this.onSubmit}>
 							<div>
 								<FullWithFlex justify="space-between" wrap>
-									{this.state.persons.map((person: PersonWithKey) => (
+									{this.state.persons.map((person: Person) => (
 											<Box width={[ 1, 1, 0.5 ]} key={person.key}>
 												<PersonResponse person={person} onUpdate={this.onPersonUpdate} />
 											</Box>
@@ -168,10 +134,11 @@ const SubmitButton = Button.extend`
 `;
 
 const mapFirebaseToProps = (props: Props, ref: any, firebase: App) => ({
-	persons: `response/${props.currentUser && props.currentUser.uid}/persons`,
-	responded: `response/${props.currentUser && props.currentUser.uid}/responded`,
-	updateResponded: (responded: boolean) => ref(`response/${props.currentUser && props.currentUser.uid}/responded`).set(responded),
-	updatePerson: (person: PersonWithKey) => ref(`response/${props.currentUser && props.currentUser.uid}/persons/${person.key}`).set({ name: person.name, allergies: person.allergies }),
+	persons: `users/${props.currentUser && props.currentUser.uid}`,
+	responded: `users/${props.currentUser && props.currentUser.uid}/responded`,
+	mailUpdate: `users/${props.currentUser && props.currentUser.uid}/mailUpdate`,
+	updateResponded: (responded: boolean) => ref(`users/${props.currentUser && props.currentUser.uid}/responded`).set(responded),
+	updatePerson: (person: Person) => ref(`users/${props.currentUser && props.currentUser.uid}/persons/${person.key}`).set({ name: person.name, allergies: person.allergies, food: person.food, participate: person.participate }),
 });
 export default addCurrentUser()(
 	connect(
