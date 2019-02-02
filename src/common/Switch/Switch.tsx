@@ -1,5 +1,5 @@
 import * as React from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { Flex, Box } from 'rebass';
 import theme from '../theme';
 
@@ -9,6 +9,7 @@ interface Props {
 	onChange: (selected: string) => void;
 	options: string[];
 	selected?: string;
+	disabled?: boolean;
 	className?: string;
 }
 
@@ -27,8 +28,8 @@ class Switch extends React.Component<Props, {}> {
 			{
 				options.map((option: string) => (
 					<Box width={1} key={option}>
-						<Input type="radio" id={`${this.props.name}-${option}`} name={this.props.name} value={option} onChange={this.handleChange} checked={this.props.selected === option}/>
-						<Label htmlFor={`${this.props.name}-${option}`}>{option}</Label>
+						<Input type="radio" id={`${this.props.name}-${option}`} name={this.props.name} value={option} onChange={this.handleChange} checked={this.props.selected === option} disabled={this.props.disabled}/>
+						<Label htmlFor={`${this.props.name}-${option}`} disabled={this.props.disabled}>{option}</Label>
 					</Box>
 					)
 				)
@@ -66,14 +67,16 @@ const Input = styled.input`
 const Label = styled.label`
 	display: inline-block;
 	width: 100%;
-	color: rgba(0, 0, 0, 0.6);
 	text-align: center;
 	padding: 6px 14px;
 	border: 1px solid darkgray;
 	transition: all 0.1s ease-in-out;
+	${(props: { disabled?: boolean }) => props.disabled ? css`
+		color: rgba(0, 0, 0, 0.6);
+	` : ''};
 
 	&:hover {
-		cursor: pointer;
+		cursor: ${(props: { disabled?: boolean }) => props.disabled ? 'not-allowed' : 'pointer'};
 	}
 `;
 

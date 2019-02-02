@@ -1,3 +1,6 @@
-import Button from './Button';
+import Button, { GhostButton } from './Button';
 
+export {
+	GhostButton,
+};
 export default Button;

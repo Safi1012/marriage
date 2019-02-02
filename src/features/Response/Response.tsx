@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Heading, Box, Flex, Container } from 'rebass';
 import { connect } from 'react-firebase';
 
-import Button from '../../common/Button';
+import Button, { GhostButton } from '../../common/Button';
 import Form from '../../common/Form';
 import { App } from '../../services/firebase';
 import addCurrentUser, { InjetedCurrentUserProps } from '../../hocs/addCurrentUser';
@@ -105,23 +105,47 @@ class Response extends React.Component<Props, State> {
 								<FullWithFlex justify="space-between" wrap>
 									{this.state.persons.map((person: Person) => (
 											<Box width={[ 1, 1, 0.5 ]} key={person.key}>
-												<PersonResponse person={person} onUpdate={this.onPersonUpdate} />
+												<PersonResponse person={person} onUpdate={this.onPersonUpdate} responded={this.props.response.responded}/>
 											</Box>
 									))}
 								</FullWithFlex>
 
-								<Label htmlFor="mailUpdates">EMail für Updates:</Label>
-								<Input placeholder="z.B. Arne_Maier@gmx.de" type="text" id="mailUpdates" value={this.state.mailUpdate} onChange={this.onMailUpdate}/>
+								<Box mx="20px">
+									<p>
+										<Label htmlFor="mailUpdates">E-Mail für Updates:</Label>
+									</p>
+									<Input placeholder="z.B. Arne_Maier@gmx.de" type="text" id="mailUpdates" value={this.props.response.mailUpdate} onChange={this.onMailUpdate} disabled={this.props.response.responded}/>
 
-								<FullWithFlex justify="flex-end">
-									<SubmitButton type="submit">{this.props.responded ? 'Abgeschickt' : 'Abschicken'}</SubmitButton>
-								</FullWithFlex>
+									{this.getSubmit(this.props.response.responded)}
+
+								</Box>
 							</div>
 						</Form>
 					</Box>
 				}
 			</Container>
 		);
+	}
+
+	getSubmit = (responded: boolean) => {
+		if (responded) {
+			return (
+				<div>
+					<p>
+						Danke das ihr euch zurückgemledet habt.
+					</p>
+					<p>
+						Sollest du doch noch etwas ändern wollen, kannst du das <GhostButton>Formular ändern</GhostButton>
+					</p>
+				</div>
+			);
+		}
+		return (
+			<FullWithFlex justify="flex-end">
+				<SubmitButton type="submit">Abschicken</SubmitButton>
+			</FullWithFlex>
+		);
+
 	}
 }
 
