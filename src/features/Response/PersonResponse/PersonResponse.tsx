@@ -1,24 +1,24 @@
 import * as React from 'react';
-import { Box, Button, Flex } from 'rebass';
+import { Flex } from 'rebass';
+import styled from 'styled-components';
 
-import { PersonWithKey } from '../Response';
+import { Person, Food, Participate } from '../Response.types';
 import Input from '../../../common/Input';
-import Label from '../../../common/Label';
+import Switch from '../../../common/Switch';
+import Card from '../../../common/Card';
+import { H2 } from '../../../common/headlines';
 
 interface State {}
+
 interface Props {
-	person: PersonWithKey;
-	onUpdate: (person: PersonWithKey) => void;
-	delete: (person: PersonWithKey) => void;
+	person: Person;
+	responded: boolean;
+	onUpdate: (person: Person) => void;
 }
 
 class ResponsePerson extends React.Component<Props, State> {
-
-	updateName = (event: React.ChangeEvent<HTMLInputElement>) => {
-		this.props.onUpdate({
-			...this.props.person,
-			name: event.target.value,
-		});
+	constructor(props: Props) {
+		super(props);
 	}
 
 	updateAllergie = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -28,49 +28,48 @@ class ResponsePerson extends React.Component<Props, State> {
 		});
 	}
 
-	delete = () => {
-		this.props.delete(this.props.person);
+	handleParticipation = (newValue: Participate) => {
+		this.props.onUpdate({
+			...this.props.person,
+			participate: newValue,
+		});
+	}
+
+	handleFood = (newValue: Food) => {
+		this.props.onUpdate({
+			...this.props.person,
+			food: newValue,
+		});
 	}
 
 	render() {
 		return (
-			<Box my={4}>
-				<Flex justify="space-between" wrap>
-					<Box width="300px">
-						<BigInput placeholder="Name" type="text" value={this.props.person.name} onChange={this.updateName}/>
-					</Box>
-					<RemoveButton onClick={this.delete}>
-						X
-					</RemoveButton>
-				</Flex>
-				<FlexBox>
-					<Box pr="3px">
-						Ich esse ... und habe die folgenden
-					</Box>
-					<Label htmlFor={`allergie-${this.props.person.key}`}> Unverträglichkeiten: </Label>
-					<InputAllergie placeholder="Laktose" type="text" value={this.props.person.allergies} onChange={this.updateAllergie}/>
-				</FlexBox>
-			</Box>
+			<Card>
+				<div>
+					<FlexFullWidth justify="center">
+						<H2>{this.props.person.name}</H2>
+					</FlexFullWidth>
+
+					<Question>Ich nehme Teil?</Question>
+					<Switch name={`participate-${this.props.person.key}`} options={[ Participate.Yes, Participate.No ]} selected={this.props.person.participate} onChange={this.handleParticipation} key={this.props.person.key + 'participate'} disabled={this.props.responded}/>
+
+					<Question>Du isst?</Question>
+					<Switch name={`food-${this.props.person.key}`} options={[ Food.Meet, Food.Vegetary, Food.Vegan, Food.Nothing ]} selected={this.props.person.food} onChange={this.handleFood} disabled={this.props.responded}/>
+
+					<Question>Hast du Essensallergien?</Question>
+					<Input placeholder="z.B. Laktose" type="text" value={this.props.person.allergies} onChange={this.updateAllergie} disabled={this.props.responded}/>
+				</div>
+			</Card>
 		);
 	}
 }
 
-const RemoveButton = Button.extend`
-	background-color: orange;
+const Question = styled.p`
+	margin-top: 40px;
 `;
 
-const InputAllergie = Input.extend`
-	flex: 1 0 250px;
-	margin-left: 3px;
-`;
-
-const FlexBox = Box.extend`
-	display: flex;
-	flex-wrap: wrap;
-`;
-
-const BigInput = Input.extend`
-	font-size: 1.5em;
+const FlexFullWidth = Flex.extend`
+	width: 100%;
 `;
 
 export default ResponsePerson;

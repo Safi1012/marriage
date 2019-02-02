@@ -1,86 +1,63 @@
 import * as React from 'react';
-import { Card, Heading, Box, Flex, ButtonOutline, Container } from 'rebass';
+import { Heading, Box, Flex, Container } from 'rebass';
 import { connect } from 'react-firebase';
 
-import Button from '../../common/Button';
+import Button, { GhostButton } from '../../common/Button';
 import Form from '../../common/Form';
 import { App } from '../../services/firebase';
 import addCurrentUser, { InjetedCurrentUserProps } from '../../hocs/addCurrentUser';
 import PersonResponse from './PersonResponse';
 import LoadingSpinner from '../../common/LoadingSpinner';
+import Label from '../../common/Label';
+import Input from '../../common/Input';
+import { ResponseServerResponse, Person, adjustPersonFromServer } from './Response.types';
 
 interface State {
-	persons: PersonWithKey[];
+	persons: Person[];
 	isLoading: boolean;
 }
 
 interface ExternalProps {}
 interface FirebaseInjectedProps {
-	persons: {[key: string]: Person};
-	responded: boolean;
-	addPerson: (person: Person) => any;
+	response: ResponseServerResponse;
 	updateResponded: (responded: boolean) => any;
-	updatePerson: (person: PersonWithKey) => any;
-	deleteResponse: (person: PersonWithKey) => any;
+	updatePerson: (person: Person) => any;
+	updateUpdateMail: (mail: string) => any;
 }
 interface Props extends ExternalProps, InjetedCurrentUserProps, FirebaseInjectedProps {}
 
-// meet, vegetarier, vegan switch
-export interface Person {
-	name: string;
-	allergies: string;
-}
-export interface PersonWithKey extends Person {
-	key: string;
-}
 
 class Response extends React.Component<Props, State> {
 
 	constructor(props: Props) {
 		super(props);
 		this.state = {
-			persons: this.personPropsToPersonState(props.persons),
-			isLoading: true,
+			persons: [],
+			isLoading: !props.response,
 		};
 	}
 
 	componentWillReceiveProps(nextProps: Props) {
-		if (nextProps.persons !== this.props.persons) {
-			this.setState({ persons: this.personPropsToPersonState(nextProps.persons) });
-		}
-		if (this.props.persons === undefined && nextProps.persons !== undefined) {
+		if (this.props.response === undefined && nextProps.response !== undefined) {
 			this.setState({ isLoading: false });
 		}
 	}
 
-	personPropsToPersonState(persons: {[key: string]: Person}) {
-		if (persons) {
-			return Object.entries(persons)
-				.map(([ key, person ]: [string, Person]) => ({ ...person, key }));
-		}
-		return [];
-	}
 
 	onSubmit = (e: React.FormEvent<any>) => {
 		e.preventDefault();
-		this.props.updateResponded(!this.props.responded);
+		this.props.updateResponded(!this.props.response.responded);
 	}
 
-	onPersonUpdate = (person: PersonWithKey) => {
+	onPersonUpdate = (person: Person) => {
 		this.props.updatePerson(person);
 	}
 
-	deleteResponse = (person: PersonWithKey) => {
-		this.props.deleteResponse(person);
+	onMailUpdate = (event: React.ChangeEvent<HTMLInputElement>) => {
+
+		this.props.updateUpdateMail(event.target.value);
 	}
 
-	addPerson = () => {
-		this.props.addPerson({ name: '', allergies: '' });
-	}
-
-	personResponse = (person: PersonWithKey) => {
-		return <PersonResponse key={person.key} person={person} onUpdate={this.onPersonUpdate} delete={this.deleteResponse} />;
-	}
 
 	render() {
 		return (
@@ -88,29 +65,54 @@ class Response extends React.Component<Props, State> {
 				<Heading level={2}>Rückmeldung</Heading>
 				{this.state.isLoading && <LoadingSpinner />}
 				{!this.state.isLoading &&
-					<Card>
-						<Box p={2}>
-							Wir kommen mit:
-							<Form onSubmit={this.onSubmit}>
-
-								<Box mb={4}>
-									{this.state.persons.map(this.personResponse)}
-
-									<FullWithFlex justify="flex-end">
-										<ButtonOutline onClick={this.addPerson} type="button">Einer Person mehr</ButtonOutline>
-									</FullWithFlex>
-								</Box>
-
-								<FullWithFlex justify="flex-end">
-									<SubmitButton type="submit">{this.props.responded ? 'Abgeschickt' : 'Abschicken'}</SubmitButton>
+					<Box>
+						<Form onSubmit={this.onSubmit}>
+							<div>
+								<FullWithFlex justify="space-between" wrap>
+									{adjustPersonFromServer(this.props.response.persons)
+										.map((person: Person) => (
+											<Box width={[ 1, 1, 0.5 ]} key={person.key}>
+												<PersonResponse person={person} onUpdate={this.onPersonUpdate} responded={this.props.response.responded}/>
+											</Box>
+									))}
 								</FullWithFlex>
 
-							</Form>
-						</Box>
-					</Card>
+								<Box mx="20px">
+									<p>
+										<Label htmlFor="mailUpdates">E-Mail für Updates:</Label>
+									</p>
+									<Input placeholder="z.B. Arne_Maier@gmx.de" type="text" id="mailUpdates" value={this.props.response.mailUpdate} onChange={this.onMailUpdate} disabled={this.props.response.responded}/>
+
+									{this.getSubmit(this.props.response.responded)}
+
+								</Box>
+							</div>
+						</Form>
+					</Box>
 				}
 			</Container>
 		);
+	}
+
+	getSubmit = (responded: boolean) => {
+		if (responded) {
+			return (
+				<div>
+					<p>
+						Danke das ihr euch zurückgemeldet habt.
+					</p>
+					<p>
+						Sollest du doch noch etwas ändern wollen, kannst du das <GhostButton>Formular ändern</GhostButton>
+					</p>
+				</div>
+			);
+		}
+		return (
+			<FullWithFlex justify="flex-end">
+				<SubmitButton type="submit">Rückmeldung Abschicken</SubmitButton>
+			</FullWithFlex>
+		);
+
 	}
 }
 
@@ -123,12 +125,10 @@ const SubmitButton = Button.extend`
 `;
 
 const mapFirebaseToProps = (props: Props, ref: any, firebase: App) => ({
-	persons: `response/${props.currentUser && props.currentUser.uid}/persons`,
-	responded: `response/${props.currentUser && props.currentUser.uid}/responded`,
-	addPerson: (person: Person) => ref(`response/${props.currentUser && props.currentUser.uid}/persons`).push(person),
-	updateResponded: (responded: boolean) => ref(`response/${props.currentUser && props.currentUser.uid}/responded`).set(responded),
-	updatePerson: (person: PersonWithKey) => ref(`response/${props.currentUser && props.currentUser.uid}/persons/${person.key}`).set({ name: person.name, allergies: person.allergies }),
-	deleteResponse: (person: PersonWithKey) => ref(`response/${props.currentUser && props.currentUser.uid}/persons/${person.key}`).remove(),
+	response: `users/${props.currentUser && props.currentUser.uid}`,
+	updateResponded: (responded: boolean) => ref(`users/${props.currentUser && props.currentUser.uid}/responded`).set(responded),
+	updatePerson: (person: Person) => ref(`users/${props.currentUser && props.currentUser.uid}/persons/${person.key}`).set({ name: person.name, allergies: person.allergies, food: person.food, participate: person.participate }),
+	updateUpdateMail: (mail: string) => ref(`users/${props.currentUser && props.currentUser.uid}/mailUpdate`).set(mail),
 });
 export default addCurrentUser()(
 	connect(

@@ -7,3 +7,9 @@ export default styled(Button)`
 	background-color: ${theme.colors.primaryColor};
 	cursor: pointer;
 `;
+
+export const GhostButton = styled(Button)`
+	background-color: transparent;
+	color: black;
+	cursor: pointer;
+`;
