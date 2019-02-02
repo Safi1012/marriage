@@ -90,7 +90,7 @@
 
 "@types/styled-system@^2.3.0":
   version "2.3.0"
-  resolved "https://registry.elements.inovex.io/@types%2fstyled-system/-/styled-system-2.3.0.tgz#ae5fa521add743cbffbb66628273aa81853e6ecd"
+  resolved "https://registry.yarnpkg.com/@types%2fstyled-system/-/styled-system-2.3.0.tgz#ae5fa521add743cbffbb66628273aa81853e6ecd"
   dependencies:
     styled-components "^3.3.2"
 
@@ -2411,7 +2411,7 @@ hoist-non-react-statics@^2.3.0:
 
 hoist-non-react-statics@^2.5.0:
   version "2.5.5"
-  resolved "https://registry.elements.inovex.io/hoist-non-react-statics/-/hoist-non-react-statics-2.5.5.tgz#c5903cf409c0dfd908f388e619d86b9c1174cb47"
+  resolved "https://registry.yarnpkg.com/hoist-non-react-statics/-/hoist-non-react-statics-2.5.5.tgz#c5903cf409c0dfd908f388e619d86b9c1174cb47"
 
 home-or-tmp@^2.0.0:
   version "2.0.0"
@@ -4625,7 +4625,7 @@ react-firebase:
 
 react-is@^16.3.1:
   version "16.6.3"
-  resolved "https://registry.elements.inovex.io/react-is/-/react-is-16.6.3.tgz#d2d7462fcfcbe6ec0da56ad69047e47e56e7eac0"
+  resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.6.3.tgz#d2d7462fcfcbe6ec0da56ad69047e47e56e7eac0"
 
 react-router, react-router@^4.2.0:
   version "4.2.0"
@@ -5421,7 +5421,7 @@ styled-components, styled-components@^2.1.2, styled-components@^2.2.0:
 
 styled-components@^3.3.2:
   version "3.4.10"
-  resolved "https://registry.elements.inovex.io/styled-components/-/styled-components-3.4.10.tgz#9a654c50ea2b516c36ade57ddcfa296bf85c96e1"
+  resolved "https://registry.yarnpkg.com/styled-components/-/styled-components-3.4.10.tgz#9a654c50ea2b516c36ade57ddcfa296bf85c96e1"
   dependencies:
     buffer "^5.0.3"
     css-to-react-native "^2.0.3"
@@ -5445,7 +5445,7 @@ styled-system@^1.0.0-12, styled-system@^1.0.2:
 
 stylis-rule-sheet@^0.0.10:
   version "0.0.10"
-  resolved "https://registry.elements.inovex.io/stylis-rule-sheet/-/stylis-rule-sheet-0.0.10.tgz#44e64a2b076643f4b52e5ff71efc04d8c3c4a430"
+  resolved "https://registry.yarnpkg.com/stylis-rule-sheet/-/stylis-rule-sheet-0.0.10.tgz#44e64a2b076643f4b52e5ff71efc04d8c3c4a430"
 
 stylis@^3.4.0:
   version "3.4.5"
@@ -5453,7 +5453,7 @@ stylis@^3.4.0:
 
 stylis@^3.5.0:
   version "3.5.4"
-  resolved "https://registry.elements.inovex.io/stylis/-/stylis-3.5.4.tgz#f665f25f5e299cf3d64654ab949a57c768b73fbe"
+  resolved "https://registry.yarnpkg.com/stylis/-/stylis-3.5.4.tgz#f665f25f5e299cf3d64654ab949a57c768b73fbe"
 
 supports-color@^2.0.0:
   version "2.0.0"
