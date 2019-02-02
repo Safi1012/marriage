@@ -1,1 +1,1 @@
-export type IconName = 'react';
+export type IconName = 'react' | 'send' | 'edit';

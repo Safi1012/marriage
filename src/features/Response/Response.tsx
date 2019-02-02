@@ -11,6 +11,7 @@ import LoadingSpinner from '../../common/LoadingSpinner';
 import Label from '../../common/Label';
 import Input from '../../common/Input';
 import { ResponseServerResponse, Person, adjustPersonFromServer } from './Response.types';
+import Icon from '../../common/Icon';
 
 interface State {
 	persons: Person[];
@@ -102,14 +103,29 @@ class Response extends React.Component<Props, State> {
 						Danke das ihr euch zurückgemeldet habt.
 					</p>
 					<p>
-						Sollest du doch noch etwas ändern wollen, kannst du das <GhostButton>Formular ändern</GhostButton>
+						Sollest du doch noch etwas ändern wollen, kannst du das
+						<GhostButton>
+							<Flex align="center">
+								<Box mr="6px">
+									Formular ändern
+								</Box>
+								<Icon name="edit" alt=""/>
+							</Flex>
+						</GhostButton>
 					</p>
 				</div>
 			);
 		}
 		return (
 			<FullWithFlex justify="flex-end">
-				<SubmitButton type="submit">Rückmeldung Abschicken</SubmitButton>
+				<SubmitButton type="submit">
+					<Flex align="center">
+						<Box mr="6px">
+							Rückmeldung Abschicken
+						</Box>
+						<Icon name="send" alt=""/>
+					</Flex>
+				</SubmitButton>
 			</FullWithFlex>
 		);
 
