@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Flex } from 'rebass';
 import styled from 'styled-components';
 
-import { Person, Food, Participate } from '../Response';
+import { Person, Food, Participate } from '../Response.types';
 import Input from '../../../common/Input';
 import Switch from '../../../common/Switch';
 import Card from '../../../common/Card';
