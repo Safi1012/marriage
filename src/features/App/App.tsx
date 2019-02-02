@@ -16,7 +16,7 @@ import urls from '../../shared/urls';
 import CakeList from '../CakeList';
 import Footer from './Footer';
 import Main from './Main';
-import { logout } from '../../services/authentication';
+import { logout, isLoggedIn } from '../../services/authentication';
 import Button from '../../common/Button';
 
 interface Props extends RouteComponentProps<{}> {
@@ -24,6 +24,11 @@ interface Props extends RouteComponentProps<{}> {
 }
 
 class App extends React.Component<Props> {
+
+	constructor(props: Props) {
+		super(props);
+		isLoggedIn.subscribe(loggedIn => !loggedIn && props.history.push(urls.login.url()));
+	}
 
 	handleLogout = () => {
 		logout()
