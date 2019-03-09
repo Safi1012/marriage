@@ -18,10 +18,6 @@ export default {
 		displayName: 'Rückmeldung',
 		url: '/response',
 	},
-	wishList: {
-		displayName: 'Geschenkliste',
-		url: '/wishList',
-	},
 	cakeList: {
 		displayName: 'Kuchenliste',
 		url: '/cakeList',

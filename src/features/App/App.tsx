@@ -7,7 +7,6 @@ import { Flex } from 'rebass';
 import Home from '../Home';
 import Party from '../Party';
 import Response from '../Response';
-import WishList from '../WishList';
 import Header from '../Header';
 import Impressum from '../Impressum';
 import Login from '../Login';
@@ -45,7 +44,6 @@ class App extends React.Component<Props> {
 						<Route exact path={urls.home.url} component={Home} />
 						<Route path={urls.response.url} component={Response} />
 						<Route path={urls.party.url} component={Party} />
-						<Route path={urls.wishList.url} component={WishList} />
 						<Route path={urls.cakeList.url} component={CakeList} />
 						<Route path={urls.impressum.url} component={Impressum} />
 						<Route path={urls.login.rawUrl} component={Login} />
