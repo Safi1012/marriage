@@ -17,9 +17,8 @@
 		"jsx-boolean-value": [ false ],
 		"jsx-no-multiline-js": false,
 		"variable-name": [ true, "allow-pascal-case", "allow-leading-underscore" ],
-
 		"object-shorthand-properties-first": false,
-
+		"strict-boolean-expressions": false,
 		// Fixes for `tslint-config-airbnb`:
 		"trailing-comma": [
 			true,
