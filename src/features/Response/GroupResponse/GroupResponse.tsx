@@ -53,9 +53,6 @@ class GroupResponse extends React.Component<Props, State> {
 }
 
 const mapFirebaseToProps = (props: Props, ref: any, firebase: App) => ({
-	response: `users/${props.currentUser && props.currentUser.uid}`,
-	updateResponded: (responded: boolean) => ref(`users/${props.currentUser && props.currentUser.uid}/responded`).set(responded),
-	updatePerson: (person: Person) => ref(`users/${props.currentUser && props.currentUser.uid}/persons/${person.key}`).set({ name: person.name, allergies: person.allergies, food: person.food, participate: person.participate }),
 	updateEmail: (email: string) => ref(`users/${props.currentUser && props.currentUser.uid}/email`).set(email),
 	updateSong: (song: string) => ref(`users/${props.currentUser && props.currentUser.uid}/song`).set(song),
 });
