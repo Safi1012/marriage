@@ -92,7 +92,7 @@ class Response extends React.Component<Props, State> {
 					<GhostButton>
 						<Flex align="center">
 							<Box mr="6px">
-								Formular ändern
+								Anpassen
 							</Box>
 							<Icon name="edit" alt="Formular ändern icon" />
 						</Flex>
@@ -104,7 +104,7 @@ class Response extends React.Component<Props, State> {
 				{responded ? (
 					<Flex align="center">
 					<Box mr="6px">
-						<SuccessText>Rückmeldung Erfolgreich</SuccessText>
+						<SuccessText>Erfolgreich</SuccessText>
 					</Box>
 					<Icon name="check" alt="Rückmeldung erfolgreich icon" />
 				</Flex>
@@ -112,7 +112,7 @@ class Response extends React.Component<Props, State> {
 					<SubmitButton type="submit">
 						<Flex align="center">
 							<Box mr="6px">
-								Rückmeldung Abschicken
+								Abschicken
 							</Box>
 							<Icon name="send" alt="Formular absenden icon" />
 						</Flex>
