@@ -5,7 +5,7 @@ import { User } from '../../services/firebase';
 import { onAuthStateChanged } from '../../services/authentication';
 
 
-export interface InjetedCurrentUserProps {
+export interface InjectedCurrentUserProps {
 	currentUser?: User;
 }
 
@@ -14,12 +14,12 @@ export default function addCurrentUser<OriginalProps>() {
 		currentUser?: User;
 	}
 
-	return (InnerComponent: (React.ComponentClass<OriginalProps & InjetedCurrentUserProps> | React.StatelessComponent<OriginalProps & InjetedCurrentUserProps>)): React.ComponentClass<OriginalProps> => {
+	return (InnerComponent: (React.ComponentClass<OriginalProps & InjectedCurrentUserProps> | React.StatelessComponent<OriginalProps & InjectedCurrentUserProps>)): React.ComponentClass<OriginalProps> => {
 		return class CurrentUser extends React.PureComponent<OriginalProps, State> {
 			static displayName = `CurrentUser(${InnerComponent.displayName})`;
 			private subscription: Subscription;
 
-			constructor(props: OriginalProps & InjetedCurrentUserProps) {
+			constructor(props: OriginalProps & InjectedCurrentUserProps) {
 				super(props);
 				this.state = {};
 			}

@@ -5,11 +5,10 @@ import { connect } from 'react-firebase';
 import Button, { GhostButton } from '../../common/Button';
 import Form from '../../common/Form';
 import { App } from '../../services/firebase';
-import addCurrentUser, { InjetedCurrentUserProps } from '../../hocs/addCurrentUser';
+import addCurrentUser, { InjectedCurrentUserProps } from '../../hocs/addCurrentUser';
 import PersonResponse from './PersonResponse';
+import GroupResponse from './GroupResponse';
 import LoadingSpinner from '../../common/LoadingSpinner';
-import Label from '../../common/Label';
-import Input from '../../common/Input';
 import { ResponseServerResponse, Person, adjustPersonFromServer } from './Response.types';
 import Icon from '../../common/Icon';
 
@@ -23,9 +22,8 @@ interface FirebaseInjectedProps {
 	response: ResponseServerResponse;
 	updateResponded: (responded: boolean) => any;
 	updatePerson: (person: Person) => any;
-	updateUpdateMail: (mail: string) => any;
 }
-interface Props extends ExternalProps, InjetedCurrentUserProps, FirebaseInjectedProps {}
+interface Props extends ExternalProps, InjectedCurrentUserProps, FirebaseInjectedProps {}
 
 
 class Response extends React.Component<Props, State> {
@@ -54,12 +52,6 @@ class Response extends React.Component<Props, State> {
 		this.props.updatePerson(person);
 	}
 
-	onMailUpdate = (event: React.ChangeEvent<HTMLInputElement>) => {
-
-		this.props.updateUpdateMail(event.target.value);
-	}
-
-
 	render() {
 		return (
 			<Container>
@@ -77,15 +69,9 @@ class Response extends React.Component<Props, State> {
 											</Box>
 									))}
 								</FullWithFlex>
-
+								<GroupResponse email={this.props.response.email} song={this.props.response.song} />
 								<Box mx="20px">
-									<p>
-										<Label htmlFor="mailUpdates">E-Mail für Updates:</Label>
-									</p>
-									<Input placeholder="z.B. Arne_Maier@gmx.de" type="text" id="mailUpdates" value={this.props.response.mailUpdate} onChange={this.onMailUpdate} disabled={this.props.response.responded}/>
-
 									{this.getSubmit(this.props.response.responded)}
-
 								</Box>
 							</div>
 						</Form>
@@ -144,7 +130,6 @@ const mapFirebaseToProps = (props: Props, ref: any, firebase: App) => ({
 	response: `users/${props.currentUser && props.currentUser.uid}`,
 	updateResponded: (responded: boolean) => ref(`users/${props.currentUser && props.currentUser.uid}/responded`).set(responded),
 	updatePerson: (person: Person) => ref(`users/${props.currentUser && props.currentUser.uid}/persons/${person.key}`).set({ name: person.name, allergies: person.allergies, food: person.food, participate: person.participate }),
-	updateUpdateMail: (mail: string) => ref(`users/${props.currentUser && props.currentUser.uid}/mailUpdate`).set(mail),
 });
 export default addCurrentUser()(
 	connect(

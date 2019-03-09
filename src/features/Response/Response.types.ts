@@ -6,7 +6,7 @@ export enum Participate {
 
 export enum Food {
 	Meet = 'Fleisch',
-	Vegetary = 'Vegetarisch',
+	Vegetarian = 'Vegetarisch',
 	Vegan = 'Vegan',
 	Nothing = 'Nichts',
 }
@@ -32,7 +32,8 @@ export const adjustPersonFromServer = (persons: {[key: string]: PersonServerResp
 
 export interface ResponseServerResponse {
 	persons: { [key: string]: PersonServerResponse };
-	mailUpdate: string;
+	email: string;
+	song: string;
 	responded: boolean;
 	internalName: string;
 }

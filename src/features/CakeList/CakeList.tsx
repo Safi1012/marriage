@@ -3,7 +3,7 @@ import { Heading, Button, Container } from 'rebass';
 import { connect } from 'react-firebase';
 
 import { App } from '../../services/firebase';
-import addCurrentUser, { InjetedCurrentUserProps } from '../../hocs/addCurrentUser';
+import addCurrentUser, { InjectedCurrentUserProps } from '../../hocs/addCurrentUser';
 import Input from '../../common/Input/Input';
 import Label from '../../common/Label';
 
@@ -19,7 +19,7 @@ interface FirebaseInjectedProps {
 	removeCake: (key: string) => any;
 	addCake: (cake: Cake) => any;
 }
-interface Props extends ExternalProps, FirebaseInjectedProps, InjetedCurrentUserProps {}
+interface Props extends ExternalProps, FirebaseInjectedProps, InjectedCurrentUserProps {}
 
 export interface Cake {
 	title: string;

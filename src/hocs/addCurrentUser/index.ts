@@ -1,6 +1,6 @@
-import addCurrentUser, { InjetedCurrentUserProps } from './addCurrentUser';
+import addCurrentUser, { InjectedCurrentUserProps } from './addCurrentUser';
 
 export {
-	InjetedCurrentUserProps,
+	InjectedCurrentUserProps,
 };
 export default addCurrentUser;

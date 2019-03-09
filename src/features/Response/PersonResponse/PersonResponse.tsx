@@ -54,7 +54,7 @@ class ResponsePerson extends React.Component<Props, State> {
 					<Switch name={`participate-${this.props.person.key}`} options={[ Participate.Yes, Participate.No ]} selected={this.props.person.participate} onChange={this.handleParticipation} key={this.props.person.key + 'participate'} disabled={this.props.responded}/>
 
 					<Question>Du isst?</Question>
-					<Switch name={`food-${this.props.person.key}`} options={[ Food.Meet, Food.Vegetary, Food.Vegan, Food.Nothing ]} selected={this.props.person.food} onChange={this.handleFood} disabled={this.props.responded}/>
+					<Switch name={`food-${this.props.person.key}`} options={[ Food.Meet, Food.Vegetarian, Food.Vegan, Food.Nothing ]} selected={this.props.person.food} onChange={this.handleFood} disabled={this.props.responded}/>
 
 					<Question>Hast du Essensallergien?</Question>
 					<Input placeholder="z.B. Laktose" type="text" value={this.props.person.allergies} onChange={this.updateAllergie} disabled={this.props.responded}/>
