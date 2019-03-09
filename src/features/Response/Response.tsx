@@ -129,6 +129,7 @@ const FullWithFlex = Flex.extend`
 
 const SubmitButton = Button.extend`
 	float: right;
+	border: 2px solid ${theme.colors.primaryColor};
 	:focus {
 		background-color: ${theme.colors.primaryColorDark};
 	}
