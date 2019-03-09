@@ -11,6 +11,7 @@ interface State {}
 interface ExternalProps {
 	email: string;
 	song: string;
+	responded: boolean;
 }
 interface FirebaseInjectedProps {
 	response: ResponseServerResponse;
@@ -35,16 +36,16 @@ class GroupResponse extends React.Component<Props, State> {
 	}
 
 	render() {
-		const { email, song } = this.props;
+		const { email, song, responded } = this.props;
 
 		return (
 			<Card>
 				<div>
 					<p>Email</p>
-					<Input placeholder="Max.Musterman@gmx.de" type="text" value={email} onChange={this.onEmail} />
+					<Input placeholder="Max.Musterman@gmx.de" type="text" value={email} onChange={this.onEmail} disabled={responded}/>
 
 					<p>Liedwunsch</p>
-					<Input placeholder="Michael Jackson - Thriller 1982" type="text" value={song} onChange={this.onSong} />
+					<Input placeholder="Michael Jackson - Thriller 1982" type="text" value={song} onChange={this.onSong} disabled={responded}/>
 				</div>
 			</Card>
 		);

@@ -73,7 +73,7 @@ class Response extends React.Component<Props, State> {
 											</Box>
 									))}
 								</FullWithFlex>
-								<GroupResponse email={this.props.response.email} song={this.props.response.song} />
+								<GroupResponse email={this.props.response.email} song={this.props.response.song} responded={this.props.response.responded} />
 								<Box my="20px" mx={[ 0, 0, '15px' ]}>
 									{this.getSubmit(this.props.response.responded)}
 								</Box>
