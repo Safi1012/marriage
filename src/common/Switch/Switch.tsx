@@ -68,15 +68,19 @@ const Label = styled.label`
 	display: inline-block;
 	width: 100%;
 	text-align: center;
-	padding: 6px 14px;
 	border: 1px solid darkgray;
 	transition: all 0.1s ease-in-out;
+	padding: 6px;
 	${(props: { disabled?: boolean }) => props.disabled ? css`
 		color: rgba(0, 0, 0, 0.6);
 	` : ''};
 
 	&:hover {
 		cursor: ${(props: { disabled?: boolean }) => props.disabled ? 'not-allowed' : 'pointer'};
+	}
+
+	@media(min-width: 768) {
+		padding: 6px 14px;
 	}
 `;
 
