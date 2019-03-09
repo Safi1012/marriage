@@ -103,9 +103,9 @@ class Response extends React.Component<Props, State> {
 
 				{responded ? (
 					<Flex align="center">
-					<Box mr="6px">
-						<SuccessText>Erfolgreich</SuccessText>
-					</Box>
+						<Box mr="6px">
+							<SuccessText>Erfolgreich</SuccessText>
+						</Box>
 					<Icon name="check" alt="Rückmeldung erfolgreich icon" />
 				</Flex>
 				) : (
