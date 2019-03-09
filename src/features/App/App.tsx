@@ -1,6 +1,6 @@
 import * as React from 'react';
 import styled from 'styled-components';
-import { Route, RouteComponentProps, withRouter } from 'react-router';
+import { Route, RouteComponentProps, withRouter, Switch } from 'react-router';
 import { Link } from 'react-router-dom';
 import { Flex } from 'rebass';
 
@@ -41,13 +41,16 @@ class App extends React.Component<Props> {
 				<Header />
 
 				<Main>
-					<Route exact path={urls.home.url} component={Home} />
-					<Route path={urls.response.url} component={Response} />
-					<Route path={urls.party.url} component={Party} />
-					<Route path={urls.wishList.url} component={WishList} />
-					<Route path={urls.cakeList.url} component={CakeList} />
-					<Route path={urls.impressum.url} component={Impressum} />
-					<Route path={urls.login.rawUrl} component={Login} />
+					<Switch>
+						<Route exact path={urls.home.url} component={Home} />
+						<Route path={urls.response.url} component={Response} />
+						<Route path={urls.party.url} component={Party} />
+						<Route path={urls.wishList.url} component={WishList} />
+						<Route path={urls.cakeList.url} component={CakeList} />
+						<Route path={urls.impressum.url} component={Impressum} />
+						<Route path={urls.login.rawUrl} component={Login} />
+						<Route component={Home} />
+					</Switch>
 				</Main>
 				<Footer>
 					<FlexFullWidth justify="space-between" align="center">
