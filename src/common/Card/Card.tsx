@@ -6,7 +6,7 @@ export default styled(Card)`
 	margin-top: 15px;
 
 	@media (min-width: 768px) {
-		margin: 30px 18px;
+		margin: 30px 15px 0 15px;
 	}
 `;
 

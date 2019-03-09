@@ -12,4 +12,5 @@ export const GhostButton = styled(Button)`
 	background-color: transparent;
 	color: black;
 	cursor: pointer;
+	border: 2px solid ${theme.colors.textColorLight};
 `;

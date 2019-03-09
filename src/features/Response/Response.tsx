@@ -1,7 +1,9 @@
 import * as React from 'react';
 import { Heading, Box, Flex, Container } from 'rebass';
 import { connect } from 'react-firebase';
+import styled from 'styled-components';
 
+import theme from '../../common/theme';
 import Button, { GhostButton } from '../../common/Button';
 import Form from '../../common/Form';
 import { App } from '../../services/firebase';
@@ -55,7 +57,9 @@ class Response extends React.Component<Props, State> {
 	render() {
 		return (
 			<Container>
-				<Heading level={2}>Rückmeldung</Heading>
+				<Box ml={[ 0, 0 , '15px' ]}>
+					<Heading level={2}>Rückmeldung</Heading>
+				</Box>
 				{this.state.isLoading && <LoadingSpinner />}
 				{!this.state.isLoading &&
 					<Box>
@@ -70,8 +74,7 @@ class Response extends React.Component<Props, State> {
 									))}
 								</FullWithFlex>
 								<GroupResponse email={this.props.response.email} song={this.props.response.song} />
-								<Box mx="20px">
-								<Box my="20px" mx={[ 0, 0, '20px' ]}>
+								<Box my="20px" mx={[ 0, 0, '15px' ]}>
 									{this.getSubmit(this.props.response.responded)}
 								</Box>
 							</div>
@@ -83,49 +86,55 @@ class Response extends React.Component<Props, State> {
 	}
 
 	getSubmit = (responded: boolean) => {
-		if (responded) {
-			return (
-				<div>
-					<p>
-						Danke das ihr euch zurückgemeldet habt.
-					</p>
-					<p>
-						Sollest du doch noch etwas ändern wollen, kannst du das
-						<GhostButton>
-							<Flex align="center">
-								<Box mr="6px">
-									Formular ändern
-								</Box>
-								<Icon name="edit" alt=""/>
-							</Flex>
-						</GhostButton>
-					</p>
-				</div>
-			);
-		}
 		return (
-			<FullWithFlex justify="flex-end">
-				<SubmitButton type="submit">
+			<FullWithFlex justify="space-between">
+				{responded ? (
+					<GhostButton>
+						<Flex align="center">
+							<Box mr="6px">
+								Formular ändern
+							</Box>
+							<Icon name="edit" alt="Formular ändern icon" />
+						</Flex>
+					</GhostButton>
+				) : (
+					<div />
+				)}
+
+				{responded ? (
 					<Flex align="center">
-						<Box mr="6px">
-							Rückmeldung Abschicken
-						</Box>
-						<Icon name="send" alt=""/>
-					</Flex>
-				</SubmitButton>
+					<Box mr="6px">
+						<SuccessText>Rückmeldung Erfolgreich</SuccessText>
+					</Box>
+					<Icon name="check" alt="Rückmeldung erfolgreich icon" />
+				</Flex>
+				) : (
+					<SubmitButton type="submit">
+						<Flex align="center">
+							<Box mr="6px">
+								Rückmeldung Abschicken
+							</Box>
+							<Icon name="send" alt="Formular absenden icon" />
+						</Flex>
+					</SubmitButton>
+				)}
 			</FullWithFlex>
 		);
-
 	}
 }
-
 
 const FullWithFlex = Flex.extend`
 	width: 100%;
 `;
+
 const SubmitButton = Button.extend`
 	float: right;
 `;
+
+const SuccessText = styled.p`
+	color: ${theme.colors.successColor};
+`;
+
 
 const mapFirebaseToProps = (props: Props, ref: any, firebase: App) => ({
 	response: `users/${props.currentUser && props.currentUser.uid}`,
