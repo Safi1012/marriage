@@ -42,10 +42,10 @@ class GroupResponse extends React.Component<Props, State> {
 			<Card>
 				<div>
 					<p>Email</p>
-					<Input placeholder="Max.Musterman@gmx.de" type="text" value={email} onChange={this.onEmail} disabled={responded}/>
+					<Input placeholder="Max.Mustermann@gmx.de" type="text" value={email} onChange={this.onEmail} disabled={responded}/>
 
 					<p>Liedwunsch</p>
-					<Input placeholder="Michael Jackson - Thriller 1982" type="text" value={song} onChange={this.onSong} disabled={responded}/>
+					<Input placeholder="Michael Jackson - Thriller (1982)" type="text" value={song} onChange={this.onSong} disabled={responded}/>
 				</div>
 			</Card>
 		);
