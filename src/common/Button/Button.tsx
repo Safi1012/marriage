@@ -13,4 +13,7 @@ export const GhostButton = styled(Button)`
 	color: black;
 	cursor: pointer;
 	border: 2px solid ${theme.colors.textColorLight};
+	:focus {
+		background-color: ${theme.colors.textColorLight};
+	}
 `;

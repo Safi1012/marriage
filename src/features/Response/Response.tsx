@@ -129,6 +129,9 @@ const FullWithFlex = Flex.extend`
 
 const SubmitButton = Button.extend`
 	float: right;
+	:focus {
+		background-color: ${theme.colors.primaryColorDark};
+	}
 `;
 
 const SuccessText = styled.p`
