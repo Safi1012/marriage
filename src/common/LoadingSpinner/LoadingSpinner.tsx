@@ -11,19 +11,26 @@ interface Props {
 class LoadingSpinner extends React.PureComponent<Props> {
 	render() {
 		return (
-			<div className={this.props.className}>
-				<div />
-			</div>
+			<CenteredDiv>
+				<div className={this.props.className}>
+					<div />
+				</div>
+			</CenteredDiv>
 		);
 	}
 }
 
-export default styled(LoadingSpinner)`
+const CenteredDiv = styled.div`
 	position: absolute;
-	left: 50%;
-	bottom: 50%;
 	width: 64px;
 	height: 64px;
+	left: 50%;
+	bottom: 50%;
+	transform: translateX(-50%) translateY(-50%);
+`;
+
+
+export default styled(LoadingSpinner)`
 	transform: rotate(45deg);
 	transform-origin: 32px 32px;
 
